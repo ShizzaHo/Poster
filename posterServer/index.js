@@ -106,20 +106,30 @@ app.post("/api/loginUser", jsonParser, async function(request, response){
 
     const findedUser = await users.findOne({email: request.body.email});
 
-    if(await findedUser.password === request.body.password){
-        response.json({
-            type: "TYPE_LOGINUSER", 
-            payload: {
-                status: "OK",
-                data: findedUser._id
-            }
-        });
+    if (findedUser !== null) {
+        if(await findedUser.password === request.body.password){
+            response.json({
+                type: "TYPE_LOGINUSER", 
+                payload: {
+                    status: "OK",
+                    data: findedUser._id
+                }
+            });
+        } else {
+            response.json({
+                type: "TYPE_LOGINUSER", 
+                payload: {
+                    status: "ERROR",
+                    data: "ERRORTYPE_INCORRECT_DATA"
+                }
+            });
+        }
     } else {
         response.json({
             type: "TYPE_LOGINUSER", 
             payload: {
                 status: "ERROR",
-                data: "ERRORTYPE_INCORRECT_DATA"
+                data: "ERRORTYPE_USER_NONEXISTENT"
             }
         });
     }

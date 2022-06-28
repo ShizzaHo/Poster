@@ -5,8 +5,8 @@ import { useState } from 'react';
 export default function Signin() {
 
     const [inputs, setInputs] = useState({
-        email: "chekan898@gmail.com",
-        password: "Nuamka1234",
+        email: "",
+        password: "",
     })
 
     return (
@@ -57,7 +57,7 @@ export default function Signin() {
             if (response.ok) {
             let json = await response.json();
             if (json.payload.status === "OK") {
-                alert("Успешная регистрация")
+                alert("Успешная авторизация")
             } else {
                 alert(json.payload.data)
             }

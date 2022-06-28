@@ -6,6 +6,7 @@ import './index.css';
 import App from './App';
 import Signin from './pages/signin/signin';
 import Signup from './pages/signup/signup';
+import UserAgreement from './pages/userAgreement/userAgreement';
 
 import reportWebVitals from './reportWebVitals';
 
@@ -18,8 +19,11 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} /> {/* Страница главная страница */}
+
         <Route path="/signup" element={<Signup />} /> {/* Страница регистрации */}
         <Route path="/signin" element={<Signin />} /> {/* Страница входа */}
+
+        <Route path="/userAgreement" element={<UserAgreement />} /> {/* Страница входа */}
       </Routes>
     </BrowserRouter>
   </Provider>

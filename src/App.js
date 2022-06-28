@@ -5,8 +5,10 @@ export default function App() {
   const state = useSelector(state => state);
 
   return (
-    <>
-      hi
-    </>
+    <main>
+      <a href='/signup'>Регистрация</a><br></br>
+      <a href='/signin'>Авторизация</a><br></br>
+      <a href='/userAgreement'>Пользовательское соглашение</a><br></br>
+    </main>
   );
 }
