@@ -54,7 +54,7 @@ app.post("/api/createUser", jsonParser, async function(request, response){
     if (await isUniqueData(request.body)) {
         let createUser = new Promise(async function(resolve, reject) {
             users.insertOne({
-                name: request.body.name,
+                login: request.body.login,
                 email: request.body.email,
                 fullname: request.body.fullname,
                 password: request.body.password,
@@ -96,5 +96,33 @@ app.post("/api/createUser", jsonParser, async function(request, response){
 async function isUniqueData(data) {
     return await users.findOne({email: data.email}) == null;
 }
+
+/* -------------------------------------------------------------------------- */
+/*                              Авторизация юзера                             */
+/* -------------------------------------------------------------------------- */
+
+app.post("/api/loginUser", jsonParser, async function(request, response){
+    console.info("[POST] Обращение к /api/loginUser");
+
+    const findedUser = await users.findOne({email: request.body.email});
+
+    if(await findedUser.password === request.body.password){
+        response.json({
+            type: "TYPE_LOGINUSER", 
+            payload: {
+                status: "OK",
+                data: findedUser._id
+            }
+        });
+    } else {
+        response.json({
+            type: "TYPE_LOGINUSER", 
+            payload: {
+                status: "ERROR",
+                data: "ERRORTYPE_INCORRECT_DATA"
+            }
+        });
+    }
+});
 
 app.listen(3001);

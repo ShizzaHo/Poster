@@ -1,5 +1,4 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function App() {
@@ -7,34 +6,7 @@ export default function App() {
 
   return (
     <>
-      <button onClick={cu}>Создать юзера (Пример)</button>
+      hi
     </>
   );
-}
-
-async function cu() {
-  let response = await fetch("http://localhost:3001/api/createUser",{
-    method: "post",
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      name: "Павел Дуров",
-      email: "VernySteny@mail.ru",
-      fullname: "Дуров Дура Дурович",
-      password: "YaNeNeo",
-      passwordRepeat: "YaNeNeo"
-    })
-  });
-
-  if (response.ok) {
-    let json = await response.json();
-    if (json.payload.data == ) {
-      
-    }
-    console.log(json);
-  } else {
-    alert("Ошибка HTTP: " + response.status);
-  }
 }
