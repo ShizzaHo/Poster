@@ -12,6 +12,7 @@ import reportWebVitals from './reportWebVitals';
 
 import { Provider } from 'react-redux';
 import store from './store/index';
+import User from './pages/user/user';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -19,6 +20,8 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} /> {/* Страница главная страница */}
+
+        <Route path="/user/:id" element={<User />} /> {/* Страница входа */}
 
         <Route path="/signup" element={<Signup />} /> {/* Страница регистрации */}
         <Route path="/signin" element={<Signin />} /> {/* Страница входа */}

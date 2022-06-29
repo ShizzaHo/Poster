@@ -55,13 +55,14 @@ export default function Signin() {
             });
         
             if (response.ok) {
-            let json = await response.json();
-            if (json.payload.status === "OK") {
-                alert("Успешная авторизация")
-            } else {
-                alert(json.payload.data)
-            }
-            console.log(json);
+                let json = await response.json();
+                if (json.payload.status === "OK") {
+                    alert("Успешная авторизация")
+                    window.localStorage.setItem("SESSION_TOKEN",json.payload.data.token)
+                } else {
+                    alert(json.payload.data)
+                }
+                console.log(json);
             } else {
                 alert("Ошибка HTTP: " + response.status);
             }

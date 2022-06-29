@@ -95,6 +95,7 @@ export default function Signup() {
             let json = await response.json();
             if (json.payload.status === "OK") {
                 alert("Успешная регистрация")
+                window.localStorage.setItem("SESSION_TOKEN",json.payload.data.token)
             } else {
                 alert(json.payload.data)
             }

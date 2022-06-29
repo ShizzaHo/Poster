@@ -17,7 +17,7 @@ app.use(cors());
 /*                            MongoDB Конфигурация                            */
 /* -------------------------------------------------------------------------- */
 
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 const client = new MongoClient("mongodb://127.0.0.1:27017/poster");
 
 async function mongoConnect (){
@@ -26,6 +26,7 @@ async function mongoConnect (){
 }
 
 const users = client.db().collection("users");
+const sessions = client.db().collection("sessionList");
 
 mongoConnect();
 
@@ -67,7 +68,9 @@ app.post("/api/createUser", jsonParser, async function(request, response){
                 const id = {userId: await userInfo._id};
                 resolve({
                     status: "OK", 
-                    data: await id
+                    data: {
+                        token: await generateSessionToken(userInfo._id)
+                    }
                 })
             }).catch(e => {
                 reject({status: "ERROR", data: "ERRORTYPE_INCORRECT_DATA"})
@@ -91,7 +94,7 @@ app.post("/api/createUser", jsonParser, async function(request, response){
     
 });
 
-/* Проверка уникальности данныз */
+/* Проверка уникальности данных */
 
 async function isUniqueData(data) {
     return await users.findOne({email: data.email}) == null;
@@ -112,7 +115,9 @@ app.post("/api/loginUser", jsonParser, async function(request, response){
                 type: "TYPE_LOGINUSER", 
                 payload: {
                     status: "OK",
-                    data: findedUser._id
+                    data: {
+                        token: await generateSessionToken(findedUser._id)
+                    }
                 }
             });
         } else {
@@ -133,6 +138,61 @@ app.post("/api/loginUser", jsonParser, async function(request, response){
             }
         });
     }
+});
+
+/* -------------------------------------------------------------------------- */
+/*                   Генерация новой сессии и токена сессии                   */
+/* -------------------------------------------------------------------------- */
+
+let rand = function() {
+    return Math.random().toString(36).substr(2); // remove `0.`
+};
+
+async function generateSessionToken(userId) {
+    const findedUser = await users.findOne({_id: ObjectId(userId)});
+    const TOKEN = rand() + rand() + rand() + rand();
+
+    sessions.insertOne({
+        userID: await findedUser._id,
+        sessionToken: TOKEN
+    })
+
+    return TOKEN;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                        Получить данные пользователя                        */
+/* -------------------------------------------------------------------------- */
+
+app.post("/api/getUserInfo", jsonParser, async function(request, response){
+    console.info("[POST] Обращение к /api/getUserInfo");
+    
+    const findedUser = await users.findOne({login: request.body.login});
+
+    if (findedUser !== null) {
+        response.json({
+            type: "TYPE_GETUSERINFO", 
+            payload: {
+                status: "OK",
+                data: {
+                    login: await findedUser.login,
+                    fullname: await findedUser.fullname,
+                    status: await findedUser.status,
+                    email: await findedUser.email,
+                    accountInfo: await findedUser.accountInfo,
+                }
+            }
+        });
+    } else {
+        response.json({
+            type: "TYPE_GETUSERINFO", 
+            payload: {
+                status: "ERROR",
+                data: "ERRORTYPE_USER_NONEXISTENT"
+            }
+        });
+    }
+
 });
 
 app.listen(3001);
