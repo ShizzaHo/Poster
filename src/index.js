@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter,Routes,Route } from "react-router-dom";
-import './index.css';
+import './index.scss';
 
 import App from './App';
-import Signin from './pages/signin/signin';
-import Signup from './pages/signup/signup';
+import Dev from './Dev';
+import Signin from './pages/signup/signup';
+import Signup from './pages/signin/signin';
 import UserAgreement from './pages/userAgreement/userAgreement';
 
 import reportWebVitals from './reportWebVitals';
@@ -20,6 +21,7 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} /> {/* Страница главная страница */}
+        <Route path="/dev" element={<Dev />} /> {/* Страница главная страница */}
 
         <Route path="/user/:id" element={<User />} /> {/* Страница входа */}
 

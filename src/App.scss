@@ -1,8 +1,36 @@
-body{
-  background-color: #121212;
-  color: white;
+.app{
+  width: 100vw;
+  min-height: 100vh;
 }
 
-a, a:visited{
-  color: white;
+.app__blurPanel{
+  position: fixed;
+  width: 600px;
+  min-height: 100vh;
+
+  right: 0;
+
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(50px);
+}
+
+.blurPanel__content{
+  position: relative;
+  height: 100vh;
+  box-sizing: border-box;
+  padding: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content__buttonPanel{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+
+  width: 100%;
 }

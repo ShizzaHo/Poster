@@ -1,35 +1,28 @@
 import './App.scss';
 import {useNavigate} from 'react-router-dom';
 
+import PosterTitle from './components/global/posterTitle/PosterTitle';
+
 export default function App() {
   const navigate = useNavigate();
 
   return (
-    <main>
-      <a href='/signup'>Регистрация</a><br></br>
-      <a href='/signin'>Авторизация</a><br></br>
-      <a href="#" onClick={openMyPage}>Личная страница</a><br></br>
-      <a href='/userAgreement'>Пользовательское соглашение</a><br></br>
-      <br></br>
-      <a href='#' onClick={clearLS}>Очистить LocalStorage</a><br></br>
+    <main className='app'>
+      <div className='app__blurPanel'>
+        <div className='blurPanel__content'>
+          <PosterTitle />
+          <div className='content__buttonPanel'>
+            <button className='buttonPanel_button button' onClick={signin}>Войти</button>
+            <button className='buttonPanel_button button'>Регистрация</button>
+            <a href='#'>Забыли пароль?</a>
+          </div>
+        </div>
+      </div>
     </main>
   );
 
-  function clearLS() {
-    window.localStorage.clear();
-    alert("Очищено")
+  function signin() {
+    navigate('/signin', [navigate])
   }
 
-  async function openMyPage() {
-    let response = await fetch("http://localhost:3001/api/getUserInfo?session="+window.localStorage.getItem("SESSION_TOKEN"));
-
-    if (response.ok) {
-      let json = await response.json();
-      if (json.payload.status === "OK") {
-        navigate('/user/'+json.payload.data.login, {replace: true}, [navigate])
-      } else {
-        navigate('/user/signin')
-      }
-    }
-  }
 }

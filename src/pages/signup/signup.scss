@@ -1,0 +1,40 @@
+.signup__footer{
+    position: relative;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.footer__footerContent{
+    display: flex;
+    flex-direction: row;
+    height: 42px;
+
+    gap: 10px;
+    align-items: center;
+}
+
+.footerContent__icon{
+    box-sizing: border-box;
+    height: 100%;
+    padding: 0px 10px;
+
+    background: rgba(255, 255, 255, 0.2);
+
+    display: flex;
+    align-items: center;
+
+    cursor: pointer;
+    user-select: none;
+}
+
+.footerContent__icon:hover{
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.footerContent__icon:active{
+    background: rgba(255, 255, 255, 0.35);
+}
+
+.main__content{
+    display: flex;
+    flex-direction: column;
+}
