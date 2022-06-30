@@ -1,25 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-const openPageLogin = window.location.pathname.split("/")[2];
+import { useParams } from "react-router-dom";
 
 export default function User(props) {
+    const { id } = useParams();
 
     const [userData, setUserData] = useState({});
     const [accountInfo, setAccountInfo] = useState({});
-
+    
     useEffect(() =>{
         const getData = async () => {
-            let response = await fetch("http://localhost:3001/api/getUserInfo",{
-                method: "post",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    login: openPageLogin
-                })
-            });
+            let response = await fetch("http://localhost:3001/api/getUserInfo?login="+id);
 
             if (response.ok) {
                 let json = await response.json();
@@ -34,7 +25,7 @@ export default function User(props) {
             }
         }
         getData();
-    }, []);
+    }, [id]);
 
     return (
         <main className=''>
@@ -47,6 +38,6 @@ export default function User(props) {
     );
 
     function errorPage() {
-        
+        window.location.href = "/";
     }
 }

@@ -40,7 +40,10 @@ app.get("/api/test", function(request, response){
     response.json({
         type: "TYPE_TEST", 
         payload: {
-            response: "API WORK!"
+			status: "OK",
+            data: {
+				value: "API WORK!",
+			}
         }
     });
 });
@@ -164,22 +167,39 @@ async function generateSessionToken(userId) {
 /*                        Получить данные пользователя                        */
 /* -------------------------------------------------------------------------- */
 
-app.post("/api/getUserInfo", jsonParser, async function(request, response){
+app.get("/api/getUserInfo", jsonParser, async function(request, response){
     console.info("[POST] Обращение к /api/getUserInfo");
-    
-    const findedUser = await users.findOne({login: request.body.login});
 
-    if (findedUser !== null) {
+    const findedUser = async () => {
+        if (await request.query.login !== undefined) {
+            return await users.findOne({login: request.query.login})
+        } else if (await request.query.token !== undefined) {
+            return await users.findOne({_id: ObjectId(request.query.token)})
+        } else if (await request.query.session !== undefined) {
+            const user = await sessions.findOne({sessionToken: request.query.session});
+            if (user !== null) {
+                return await users.findOne({_id: ObjectId(await user.userID)});
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    };
+
+    const user = await findedUser();
+
+    if (await user !== null) {
         response.json({
             type: "TYPE_GETUSERINFO", 
             payload: {
                 status: "OK",
                 data: {
-                    login: await findedUser.login,
-                    fullname: await findedUser.fullname,
-                    status: await findedUser.status,
-                    email: await findedUser.email,
-                    accountInfo: await findedUser.accountInfo,
+                    login: await user.login,
+                    fullname: await user.fullname,
+                    status: await user.status,
+                    email: await user.email,
+                    accountInfo: await user.accountInfo,
                 }
             }
         });
@@ -192,7 +212,6 @@ app.post("/api/getUserInfo", jsonParser, async function(request, response){
             }
         });
     }
-
 });
 
 app.listen(3001);
