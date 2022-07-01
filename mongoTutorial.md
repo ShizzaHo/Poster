@@ -4,4 +4,4 @@
 на момент __30.06.2022__ этот способ является актуальным
 
 У вас должно получиться что-то подобное:
-![[mongohelp.png]]
+![[https://github.com/ShizzaHo/Poster/blob/main/mongohelp.png]]

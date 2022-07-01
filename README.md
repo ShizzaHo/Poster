@@ -27,5 +27,7 @@
 ### `npm start`
 
 ## Больше информации:
+
 [Руководство по API сервера](https://github.com/ShizzaHo/Poster/blob/main/posterServer/readme_api.md)
+
 [Первичная настройка MongoDB](https://github.com/ShizzaHo/Poster/blob/main/mongoTutorial.md)

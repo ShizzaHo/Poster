@@ -169,3 +169,44 @@ http://localhost:3001/api/getUserInfo?session=*USER_SESSION*
 	</code></pre>
 </details>
 
+## editUserData
+Запрос для обращения: `/api/editUserData`
+
+Тип: POST
+
+Наименование в ответе: `TYPE_EDITUSERDATA`
+
+Описание: Используется для изменения данных пользователя
+
+Входные данные: Логин пользователя у которого будут меняться данные, глобальные данные, второстепенные данные
+
+Важно: API метод является довольно опасным, и дрявым, от чего злоумышленник может переписать данные любого пользователя без особых проблем, потому этот метод является временной затычкой!!!
+
+<details>
+  <summary>Пример запроса</summary>
+  <pre><code>
+{
+    userLogin: *USER_LOGIN*,
+    global: {
+		*USER_GLOBAL_DATA*
+	},
+    other: {
+		*USER_OTHER_DATA*
+	},
+}
+  </code></pre>
+</details>
+<details>
+  <summary>Пример ответа</summary>
+  <pre><code>
+{
+    type: "TYPE_EDITUSERDATA", 
+    payload: {
+		status: "OK",
+		data: {
+			newLogin: request.body.global.login
+		},
+	}
+}
+	</code></pre>
+</details>

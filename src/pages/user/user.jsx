@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 export default function User(props) {
     const { id } = useParams();
 
     const [userData, setUserData] = useState({});
     const [accountInfo, setAccountInfo] = useState({});
+
+    const navigate = useNavigate();
     
     useEffect(() =>{
         const getData = async () => {
@@ -34,10 +36,17 @@ export default function User(props) {
             <p>Статус пользователя: {accountInfo.profileStatus}</p>
             <p>Email: {userData.email}</p>
             <p>Статус аккаунта: {userData.status}</p>
+            <a href='#' onClick={editProfile}>Редактировать данные аккаунта</a><br></br>
+            <a href='#'>Завершить все активные сессии</a><br></br>
+            <a href='#'>Удалить аккаунт</a><br></br>
         </main>
     );
 
     function errorPage() {
         window.location.href = "/";
+    }
+
+    function editProfile() {
+        navigate('/editProfile', [navigate])
     }
 }

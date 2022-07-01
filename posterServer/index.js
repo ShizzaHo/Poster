@@ -168,7 +168,7 @@ async function generateSessionToken(userId) {
 /* -------------------------------------------------------------------------- */
 
 app.get("/api/getUserInfo", jsonParser, async function(request, response){
-    console.info("[POST] Обращение к /api/getUserInfo");
+    console.info("[GET] Обращение к /api/getUserInfo");
 
     const findedUser = async () => {
         if (await request.query.login !== undefined) {
@@ -212,6 +212,57 @@ app.get("/api/getUserInfo", jsonParser, async function(request, response){
             }
         });
     }
+});
+
+/* -------------------------------------------------------------------------- */
+/*                        Изменить данные пользователя                        */
+/* -------------------------------------------------------------------------- */
+
+app.post("/api/editUserData", jsonParser, async function(request, response){
+    console.info("[POST] Обращение к /api/editUserData");
+
+    const findedUser = await users.findOne({login: request.body.userLogin});
+    
+    if (findedUser !== null) {
+        if(await users.findOne({login: request.body.global.login}) == null){
+            await users.updateOne({login: request.body.userLogin}, {
+                $set: {
+                    login: request.body.global.login,
+                    fullname: request.body.global.fullname,
+                    email: request.body.global.email,
+                    accountInfo: {
+                        profileStatus: request.body.other.profileStatus
+                    }
+                }
+            });
+            response.json({
+                type: "TYPE_EDITUSERDATA", 
+                payload: {
+                    status: "OK",
+                    data: {
+                        newLogin: request.body.global.login
+                    },
+                }
+            });
+        } else {
+            response.json({
+                type: "TYPE_EDITUSERDATA", 
+                payload: {
+                    status: "ERROR",
+                    data: "ERRORTYPE_LOGIN_ALREADY_TAKEN"
+                }
+            });
+        }
+    } else {
+        response.json({
+            type: "TYPE_EDITUSERDATA", 
+            payload: {
+                status: "ERROR",
+                data: "ERRORTYPE_USER_NONEXISTENT"
+            }
+        });
+    }
+    
 });
 
 app.listen(3001);

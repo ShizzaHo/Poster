@@ -116,9 +116,9 @@ export default function Register() {
                 password: inputs.password,
                 passwordRepeat: inputs.passwordRepeat
             })
-            });
+        });
         
-            if (response.ok) {
+        if (response.ok) {
             let json = await response.json();
             if (json.payload.status === "OK") {
                 window.localStorage.setItem("SESSION_TOKEN",json.payload.data.token)
@@ -130,6 +130,6 @@ export default function Register() {
             console.log(json);
             } else {
                 alert("Ошибка HTTP: " + response.status);
-            }
+        }
     }
 }
