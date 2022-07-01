@@ -26,13 +26,13 @@
 
   transition: all 800ms ease-in-out;
 
-  .blurPanel__content{
+  .app__blurPanel__content{
     transition: all 800ms ease-in-out;
     opacity: 0;
   }
 }
 
-.blurPanel__content{
+.app__blurPanel__content{
   position: relative;
   height: 100vh;
   box-sizing: border-box;
@@ -45,7 +45,7 @@
   animation: fade-in 400ms ease-in-out;
 }
 
-.content__buttonPanel{
+.app__content__buttonPanel{
   position: relative;
   display: flex;
   flex-direction: column;

@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter,Routes,Route } from "react-router-dom";
-import './index.scss';
+
+import './styles/global/setup.scss';
+import './styles/global/elements.scss';
+import './styles/global/animations.scss';
+
 
 import App from './App';
 import Dev from './Dev';

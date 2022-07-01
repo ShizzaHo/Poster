@@ -1,0 +1,35 @@
+/* -------------------------------------------------------------------------- */
+/*                          Глобальная преднастройка                          */
+/* -------------------------------------------------------------------------- */
+
+* {
+  font-family: "Inter", "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  background-color: #121212;
+  color: white;
+
+  min-height: 100vh;
+
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../../res/backgrounds/0001.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+a,
+a:visited {
+  color: white;
+}
+
+a:hover {
+  color: rgb(223, 223, 223);
+}
+
+a:active {
+  color: rgb(196, 196, 196);
+}
