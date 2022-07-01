@@ -14,6 +14,24 @@
   backdrop-filter: blur(50px);
 }
 
+.app__blurPanel_open{
+  position: fixed;
+  width: 100vw;
+  min-height: 100vh;
+
+  right: 0;
+
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(50px);
+
+  transition: all 800ms ease-in-out;
+
+  .blurPanel__content{
+    transition: all 800ms ease-in-out;
+    opacity: 0;
+  }
+}
+
 .blurPanel__content{
   position: relative;
   height: 100vh;
@@ -23,6 +41,8 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+
+  animation: fade-in 400ms ease-in-out;
 }
 
 .content__buttonPanel{

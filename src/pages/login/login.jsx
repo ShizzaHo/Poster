@@ -1,4 +1,4 @@
-import './signup.scss';
+import './login.scss';
 import {useNavigate} from 'react-router-dom';
 import MaterialIcon from 'material-icons-react';
 
@@ -6,7 +6,7 @@ import PosterTitle from '../../components/global/posterTitle/PosterTitle';
 
 import { useState } from 'react';
 
-export default function Signup() {
+export default function Login() {
     const navigate = useNavigate();
 
     const [inputs, setInputs] = useState({
@@ -14,21 +14,25 @@ export default function Signup() {
         password: "",
     })
 
+  const [closePanel, setClosePanel] = useState(false)
+
     return (
-        <div className='fullscreenBlur'>
+        <div className={closePanel ? "fullscreenBlur_close" : "fullscreenBlur"}>
             <footer className='signup__footer'>
                 <div className='footer__footerContent'>
                     <div className='footerContent__icon' onClick={back}>
                         <MaterialIcon icon="arrow_back" color="#FFFFFF"/>
                     </div>
-                    <span className='footerContent__text'>Регистрация в POSTER</span>
+                    <span className='footerContent__text'>Войти в POSTER</span>
                 </div>
             </footer>
             <main className='signup__main'>
                 <div className='main__content'>
                     <PosterTitle/>
-                    <input type="email" pattern=".+@globex\.com" required placeholder='Почта' onChange={changeEmail} value={inputs.email} className="textBox"></input><br/>
-                    <input type="password" placeholder='Пароль' onChange={changePassword} value={inputs.password} className="textBox"></input><br/>
+                    <div className='content__buttons'>
+                        <input type="email" pattern=".+@globex\.com" required placeholder='Почта' onChange={changeEmail} value={inputs.email} className="textBox"></input><br/>
+                        <input type="password" placeholder='Пароль' onChange={changePassword} value={inputs.password} className="textBox"></input><br/>
+                    </div>
                     <button onClick={login} className="button">Войти</button>
                 </div>
             </main>
@@ -36,7 +40,8 @@ export default function Signup() {
     );
 
     function back() {
-        navigate('/', [navigate])
+        setClosePanel(true)
+        setTimeout(()=>{navigate('/', [navigate])},1000)
     }
 
     function changeEmail(e) {
@@ -79,8 +84,8 @@ export default function Signup() {
             if (response.ok) {
                 let json = await response.json();
                 if (json.payload.status === "OK") {
-                    alert("Успешная авторизация")
                     window.localStorage.setItem("SESSION_TOKEN",json.payload.data.token)
+                    navigate('/', [navigate]);
                 } else {
                     alert(json.payload.data)
                 }

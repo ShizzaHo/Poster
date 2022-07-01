@@ -5,8 +5,8 @@ import './index.scss';
 
 import App from './App';
 import Dev from './Dev';
-import Signin from './pages/signup/signup';
-import Signup from './pages/signin/signin';
+import Register from './pages/register/register';
+import Login from './pages/login/login';
 import UserAgreement from './pages/userAgreement/userAgreement';
 
 import reportWebVitals from './reportWebVitals';
@@ -25,8 +25,8 @@ root.render(
 
         <Route path="/user/:id" element={<User />} /> {/* Страница входа */}
 
-        <Route path="/signup" element={<Signup />} /> {/* Страница регистрации */}
-        <Route path="/signin" element={<Signin />} /> {/* Страница входа */}
+        <Route path="/login" element={<Login />} /> {/* Страница регистрации */}
+        <Route path="/register" element={<Register />} /> {/* Страница входа */}
 
         <Route path="/userAgreement" element={<UserAgreement />} /> {/* Страница входа */}
       </Routes>

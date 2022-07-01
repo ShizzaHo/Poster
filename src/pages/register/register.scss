@@ -1,0 +1,15 @@
+.content__buttons{
+    display: flex;
+    flex-direction: column;
+}
+
+.main__content2{
+    height: calc(100vh - 42px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    box-sizing: border-box;
+    padding: 0% 40%;
+
+    animation: fade-in 400ms ease-in-out;
+}

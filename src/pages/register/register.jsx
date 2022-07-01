@@ -1,8 +1,15 @@
-import './signin.scss';
+import './register.scss';
 
 import { useState } from 'react';
+import MaterialIcon from 'material-icons-react';
+import {useNavigate} from 'react-router-dom';
 
-export default function Signin() {
+import PosterTitle from '../../components/global/posterTitle/PosterTitle';
+
+export default function Register() {
+
+    const navigate = useNavigate();
+    const [closePanel, setClosePanel] = useState(false)
 
     const [inputs, setInputs] = useState({
         login: "",
@@ -13,15 +20,35 @@ export default function Signin() {
     })
 
     return (
-        <>
-            <input type="text" placeholder='Логин' onChange={changeLogin} value={inputs.login}></input><br/>
-            <input type="email" pattern=".+@globex\.com" required placeholder='Почта' onChange={changeEmail} value={inputs.email}></input><br/>
-            <input type="text" placeholder='Полное имя (по желанию)' onChange={changeFullname} value={inputs.fullname}></input><br/>
-            <input type="password" placeholder='Пароль' onChange={changePassword} value={inputs.password}></input><br/>
-            <input type="password" placeholder='Повторите пароль' onChange={changePasswordRepeat} value={inputs.passwordRepeat}></input><br/>
-            <button onClick={registration}>Регистрация</button>
-        </>
+        <div className={closePanel ? "fullscreenBlur_close" : "fullscreenBlur"}>
+            <footer className='signup__footer'>
+                <div className='footer__footerContent'>
+                    <div className='footerContent__icon' onClick={back}>
+                        <MaterialIcon icon="arrow_back" color="#FFFFFF"/>
+                    </div>
+                    <span className='footerContent__text'>Регистрация в POSTER</span>
+                </div>
+            </footer>
+            <main className='signup__main'>
+                    <div className='main__content2'>
+                        <PosterTitle/>
+                        <div className='content__buttons'>
+                            <input type="text" placeholder='Логин' onChange={changeLogin} value={inputs.login} className="textBox"></input><br/>
+                            <input type="email" pattern=".+@globex\.com" required placeholder='Почта' onChange={changeEmail} value={inputs.email} className="textBox"></input><br/>
+                            <input type="text" placeholder='Полное имя (по желанию)' onChange={changeFullname} value={inputs.fullname} className="textBox"></input><br/>
+                            <input type="password" placeholder='Пароль' onChange={changePassword} value={inputs.password} className="textBox"></input><br/>
+                            <input type="password" placeholder='Повторите пароль' onChange={changePasswordRepeat} value={inputs.passwordRepeat} className="textBox"></input><br/>
+                        </div>
+                        <button onClick={registration} className="button">Зарегестрироваться</button>
+                    </div>
+            </main>
+        </div>
     );
+
+    function back() {
+        setClosePanel(true)
+        setTimeout(()=>{navigate('/', [navigate])},1000)
+    }
 
     function changeLogin(e) {
         const text = e.target.value;
@@ -94,8 +121,9 @@ export default function Signin() {
             if (response.ok) {
             let json = await response.json();
             if (json.payload.status === "OK") {
-                alert("Успешная регистрация")
                 window.localStorage.setItem("SESSION_TOKEN",json.payload.data.token)
+                navigate('/', [navigate]);
+
             } else {
                 alert(json.payload.data)
             }
