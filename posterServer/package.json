@@ -6,7 +6,8 @@
   "scripts": {
     "server": "node index.js",
     "server_autoRestart": "nodemon index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "mongo": "node init.js"
   },
   "keywords": [],
   "author": "ShizzaHo",

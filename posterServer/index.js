@@ -4,20 +4,19 @@
 
 const express = require("express");
 const cors = require("cors");
-const jsonParser = express.json();
-
+const { MongoClient, ObjectId } = require("mongodb");
 /* -------------------------------------------------------------------------- */
 /*                            Express Конфигурация                            */
 /* -------------------------------------------------------------------------- */
 
 const app = express();
+const jsonParser = express.json();
 app.use(cors());
 
 /* -------------------------------------------------------------------------- */
 /*                            MongoDB Конфигурация                            */
 /* -------------------------------------------------------------------------- */
 
-const { MongoClient, ObjectId } = require("mongodb");
 const client = new MongoClient("mongodb://127.0.0.1:27017/poster");
 
 async function mongoConnect() {

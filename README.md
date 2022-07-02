@@ -26,8 +26,20 @@
 Запуск дебаг сайта:
 ### `npm start`
 
+## Настройка MongoDB
+
+### Этап 1. Перейдите в директорию сервера
+### `cd posterserver`
+
+### Этап 2. Установите зависимости
+
+### `npm install`
+
+### Этап 3. Запустите команду инициализации сервера
+
+Для корректной работы вам необходимо ввести два аргумента, первым аргументом будет URL до вашей MongoDB, а вторым желаемое название для базы данных, которая будет создана
+### `npm run mongo <mongo-URL> <database-name>`
+
 ## Больше информации:
 
 [Руководство по API сервера](https://github.com/ShizzaHo/Poster/blob/main/posterServer/readme_api.md)
-
-[Первичная настройка MongoDB](https://github.com/ShizzaHo/Poster/blob/main/mongoTutorial.md)

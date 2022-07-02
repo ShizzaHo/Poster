@@ -24,3 +24,4 @@ yarn-error.log*
 
 #other
 /service_for_development
+/posterServer/node_modules
