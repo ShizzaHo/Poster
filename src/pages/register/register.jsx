@@ -166,7 +166,6 @@ export default function Register() {
       } else {
         alert(json.payload.data);
       }
-      console.log(json);
     } else {
       alert("Ошибка HTTP: " + response.status);
     }

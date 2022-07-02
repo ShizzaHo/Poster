@@ -7,6 +7,7 @@ export default function User(props) {
   const [accountInfo, setAccountInfo] = useState({});
 
   const [userEditLogin, setUserEditLogin] = useState(null);
+  const [userPassword, setUserPassword] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -60,6 +61,14 @@ export default function User(props) {
       ></input>
       <br></br>
       <br></br>
+      <input onChange={passwordEdit} placeholder="Пароль"></input>
+      <br></br>
+      <br></br>
+      <a href="#" onClick={editPassword}>
+        Изменить пароль аккаунта
+      </a>
+      <br></br>
+      <br></br>
       <button onClick={save}>Сохранить</button>
     </main>
   );
@@ -73,6 +82,7 @@ export default function User(props) {
       },
       body: JSON.stringify({
         userLogin: userEditLogin,
+        password: userPassword,
         global: userData,
         other: accountInfo,
       }),
@@ -117,6 +127,42 @@ export default function User(props) {
       ...accountInfo,
       profileStatus: e.target.value,
     });
+  }
+
+  function passwordEdit(e) {
+    setUserPassword(e.target.value);
+  }
+
+  async function editPassword() {
+    const oldPassword = await prompt("Введите текущий пароль");
+    const newPassword = await prompt("Введите новый пароль");
+    const newPasswordRepeat = await prompt("Повторите новый пароль");
+
+    let response = await fetch("http://localhost:3001/api/editUserPassword", {
+      method: "post",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        login: await userEditLogin,
+        oldPassword: await oldPassword,
+        newPassword: await newPassword,
+        newPasswordRepeat: await newPasswordRepeat,
+      }),
+    });
+
+    if (response.ok) {
+      let json = await response.json();
+      if (json.payload.status === "OK") {
+        alert("Пароль успешно изменен");
+      } else {
+        alert(json.payload.data);
+      }
+      console.log(json);
+    } else {
+      alert("Ошибка HTTP: " + response.status);
+    }
   }
 
   function errorPage() {

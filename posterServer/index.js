@@ -226,35 +226,45 @@ app.post("/api/editUserData", jsonParser, async function (request, response) {
   const findedUser = await users.findOne({ login: request.body.userLogin });
 
   if (findedUser !== null) {
-    if ((await users.findOne({ login: request.body.global.login })) == null) {
-      await users.updateOne(
-        { login: request.body.userLogin },
-        {
-          $set: {
-            login: request.body.global.login,
-            fullname: request.body.global.fullname,
-            email: request.body.global.email,
-            accountInfo: {
-              profileStatus: request.body.other.profileStatus,
+    if (await findedUser.password === request.body.password) {
+      if ((await users.findOne({ login: request.body.global.login })) == null) {
+        await users.updateOne(
+          { login: request.body.userLogin },
+          {
+            $set: {
+              login: request.body.global.login,
+              fullname: request.body.global.fullname,
+              email: request.body.global.email,
+              accountInfo: {
+                profileStatus: request.body.other.profileStatus,
+              },
+            },
+          }
+        );
+        response.json({
+          type: "TYPE_EDITUSERDATA",
+          payload: {
+            status: "OK",
+            data: {
+              newLogin: request.body.global.login,
             },
           },
-        }
-      );
-      response.json({
-        type: "TYPE_EDITUSERDATA",
-        payload: {
-          status: "OK",
-          data: {
-            newLogin: request.body.global.login,
+        });
+      } else {
+        response.json({
+          type: "TYPE_EDITUSERDATA",
+          payload: {
+            status: "ERROR",
+            data: "ERRORTYPE_LOGIN_ALREADY_TAKEN",
           },
-        },
-      });
+        });
+      }
     } else {
       response.json({
         type: "TYPE_EDITUSERDATA",
         payload: {
           status: "ERROR",
-          data: "ERRORTYPE_LOGIN_ALREADY_TAKEN",
+          data: "ERRORTYPE_ACCESS_BLOCKED",
         },
       });
     }
@@ -264,6 +274,96 @@ app.post("/api/editUserData", jsonParser, async function (request, response) {
       payload: {
         status: "ERROR",
         data: "ERRORTYPE_USER_NONEXISTENT",
+      },
+    });
+  }
+});
+
+/* -------------------------------------------------------------------------- */
+/*                        Изменить пароль пользователя                        */
+/* -------------------------------------------------------------------------- */
+
+app.post("/api/editUserPassword", jsonParser, async function (request, response) {
+  console.info("[POST] Обращение к /api/editUserPassword");
+
+  const findedUser = await users.findOne({ login: request.body.login });
+
+  if (findedUser !== null) {
+    if (request.body.newPassword === request.body.newPasswordRepeat) {
+      if (findedUser.password === request.body.oldPassword) {
+        await users.updateOne(
+          { login: request.body.login },
+          {
+            $set: {
+              password: request.body.newPassword
+            },
+          }
+        );
+        response.json({
+          type: "TYPE_EDITUSERPASSWORD",
+          payload: {
+            status: "OK",
+          },
+        });
+      } else {
+        response.json({
+          type: "TYPE_EDITUSERPASSWORD",
+          payload: {
+            status: "ERROR",
+            data: "ERRORTYPE_PASSWORDS_DO_NOT_MATCH",
+          },
+        });
+      }
+    } else {
+      response.json({
+        type: "TYPE_EDITUSERPASSWORD",
+        payload: {
+          status: "ERROR",
+          data: "ERRORTYPE_ACCESS_BLOCKED",
+        },
+      });
+    }
+  } else {
+    response.json({
+      type: "TYPE_EDITUSERPASSWORD",
+      payload: {
+        status: "ERROR",
+        data: "ERRORTYPE_USER_NONEXISTENT",
+      },
+    });
+  }
+});
+
+app.post("/api/closeAllSessions", jsonParser, async function (request, response) {
+  console.info("[POST] Обращение к /api/closeAllSessions");
+
+  const findedUser = await users.findOne({ login: request.body.login });
+  const findedSessions = await sessions.find({ userID: await findedUser._id });
+
+  if (request.body.password === findedUser.password) {
+    if (findedSessions !== null) {
+      await sessions.deleteMany({ userID: await findedUser._id });
+      response.json({
+        type: "TYPE_CLOSEALLSESSIONS",
+        payload: {
+          status: "OK",
+        },
+      });
+    } else {
+      response.json({
+        type: "TYPE_CLOSEALLSESSIONS",
+        payload: {
+          status: "ERROR",
+          data: "ERRORTYPE_SESSIONS_NONEXISTENT",
+        },
+      });
+    }
+  } else {
+    response.json({
+      type: "TYPE_CLOSEALLSESSIONS",
+      payload: {
+        status: "ERROR",
+        data: "ERRORTYPE_ACCESS_BLOCKED",
       },
     });
   }

@@ -37,7 +37,7 @@ export default function User(props) {
             <p>Email: {userData.email}</p>
             <p>Статус аккаунта: {userData.status}</p>
             <a href='#' onClick={editProfile}>Редактировать данные аккаунта</a><br></br>
-            <a href='#'>Завершить все активные сессии</a><br></br>
+            <a href='#' onClick={closeAllSessions}>Завершить все активные сессии</a><br></br>
             <a href='#'>Удалить аккаунт</a><br></br>
         </main>
     );
@@ -48,5 +48,34 @@ export default function User(props) {
 
     function editProfile() {
         navigate('/editProfile', [navigate])
+    }
+
+    async function closeAllSessions() {
+        const password = await prompt("Введите ваш пароль");
+
+        let response = await fetch("http://localhost:3001/api/closeAllSessions", {
+            method: "post",
+            headers: {
+            Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                login: await userData.login,
+                password: await password,
+            }),
+        });
+
+        if (response.ok) {
+            let json = await response.json();
+            if (json.payload.status === "OK") {
+                localStorage.setItem("SESSION_TOKEN", undefined);
+                navigate('/', [navigate])
+            } else {
+                alert("Не удалось удалить все сессии")
+                alert(json.payload.data)
+            }
+        } else {
+            alert("Ошибка HTTP: " + response.status);
+        }
     }
 }

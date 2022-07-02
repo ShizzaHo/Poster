@@ -178,15 +178,14 @@ http://localhost:3001/api/getUserInfo?session=*USER_SESSION*
 
 Описание: Используется для изменения данных пользователя
 
-Входные данные: Логин пользователя у которого будут меняться данные, глобальные данные, второстепенные данные
-
-Важно: API метод является довольно опасным, и дрявым, от чего злоумышленник может переписать данные любого пользователя без особых проблем, потому этот метод является временной затычкой!!!
+Входные данные: Логин пользователя у которого будут меняться данные, пароль пользователя, глобальные данные, второстепенные данные
 
 <details>
   <summary>Пример запроса</summary>
   <pre><code>
 {
     userLogin: *USER_LOGIN*,
+	password: *USER_PASSWORD*,
     global: {
 		*USER_GLOBAL_DATA*
 	},
@@ -204,9 +203,75 @@ http://localhost:3001/api/getUserInfo?session=*USER_SESSION*
     payload: {
 		status: "OK",
 		data: {
-			newLogin: request.body.global.login
+			newLogin: *NEW_USER_LOGIN*
 		},
 	}
+}
+	</code></pre>
+</details>
+
+## editUserPassword
+Запрос для обращения: `/api/editUserPassword`
+
+Тип: POST
+
+Наименование в ответе: `TYPE_EDITUSERPASSWORD`
+
+Описание: Используется для изменения пароля пользователя
+
+Входные данные: Логин пользователя у которого будет менять пароль, текущий пароль пользователя, новый пароль пользователя, повторение нового пароля пользователя
+
+<details>
+  <summary>Пример запроса</summary>
+  <pre><code>
+{
+    login: *USER_LOGIN*,
+    oldPassword: *USER_OLD_PASSWORD*,
+    newPassword: *USER_NEW_PASSWORD*,
+    newPasswordRepeat: *USER_NEW_PASSWORD_REPEAT*,
+}
+  </code></pre>
+</details>
+<details>
+  <summary>Пример ответа</summary>
+  <pre><code>
+{
+    type: "TYPE_EDITUSERPASSWORD",
+    payload: {
+        status: "OK",
+    },
+}
+	</code></pre>
+</details>
+
+## closeAllSessions
+Запрос для обращения: `/api/closeAllSessions`
+
+Тип: POST
+
+Наименование в ответе: `TYPE_CLOSEALLSESSIONS`
+
+Описание: Используется для завершенрия всех активных сессий пользователя
+
+Входные данные: Логин пользователя, пароль пользователя
+
+<details>
+  <summary>Пример запроса</summary>
+  <pre><code>
+{
+    login: *USER_LOGIN*,
+    password: *USER_PASSWORD*,
+}
+  </code></pre>
+</details>
+<details>
+  <summary>Пример ответа</summary>
+  <pre><code>
+{
+    type: "TYPE_CLOSEALLSESSIONS",
+    payload: {
+        status: "OK",
+    },
 }
 	</code></pre>
 </details>
