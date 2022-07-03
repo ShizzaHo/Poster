@@ -1,0 +1,47 @@
+.leftMenu__nav{
+    position: fixed;
+    height: 100vh;
+    width: 52px;
+    background-color: rgba(255, 255, 255, 0.2);
+    z-index: 99;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    user-select: none;
+}
+
+.leftMenu__buttons{
+    list-style: none;
+
+    li{
+        height: 52px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        cursor: pointer;
+
+        img{
+            width: 28px;
+            height: 28px;
+        }
+    }
+
+    li:hover{
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    li:active{
+        background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .leftMenu__buttons__poster{
+        height: 72px;
+        font-family: 'Dancing Script', sans-serif;
+        font-size: 30px;
+        text-align: center;
+    }
+}

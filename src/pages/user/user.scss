@@ -5,9 +5,24 @@
 .user__main{
     min-height: 100vh;
     background: var(--cover);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.user__main__content{
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    min-height: 100vh;
 }
 
 .user__main__avatar{
     width: 100px;
     height: 100px;
+}
+
+.user__content__account{
+    right: 0;
+    margin-left: 52px;
+    box-sizing: border-box;
+    padding: 10px;
 }

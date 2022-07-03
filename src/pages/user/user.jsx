@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from "react-router-dom";
 
+import LeftMenu from '../../components/global/leftMenu/leftMenu';
+
 export default function User(props) {
     const { id } = useParams();
 
@@ -35,15 +37,20 @@ export default function User(props) {
 
     return (
         <main className='user__main'>
-            <img src={accountInfo.avatar} className="user__main__avatar"/>
-            <p>Логин: {userData.login}</p>
-            <p>Полное имя: {userData.fullname}</p>
-            <p>Статус пользователя: {accountInfo.profileStatus}</p>
-            <p>Email: {userData.email}</p>
-            <p>Статус аккаунта: {userData.status}</p>
-            <a href='#' onClick={editProfile}>Редактировать данные аккаунта</a><br></br>
-            <a href='#' onClick={closeAllSessions}>Завершить все активные сессии</a><br></br>
-            <a href='#' onClick={deleteAccount}>Удалить аккаунт</a><br></br>
+            <LeftMenu/>
+            <div className='user__main__content'>
+                <div className='user__content__account'>
+                    <img src={accountInfo.avatar} className="user__main__avatar"/>
+                    <p>Логин: {userData.login}</p>
+                    <p>Полное имя: {userData.fullname}</p>
+                    <p>Статус пользователя: {accountInfo.profileStatus}</p>
+                    <p>Email: {userData.email}</p>
+                    <p>Статус аккаунта: {userData.status}</p>
+                    <a href='#' onClick={editProfile}>Редактировать данные аккаунта</a><br></br>
+                    <a href='#' onClick={closeAllSessions}>Завершить все активные сессии</a><br></br>
+                    <a href='#' onClick={deleteAccount}>Удалить аккаунт</a><br></br>
+                </div>
+            </div>
         </main>
     );
 

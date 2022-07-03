@@ -1,3 +1,5 @@
+import './editProfile.scss'
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -34,7 +36,8 @@ export default function User(props) {
   }, []);
 
   return (
-    <main className="">
+    <main className="editProfile__main">
+      <div className='user__main__content'>
       <input
         value={userData.login}
         onChange={loginEdit}
@@ -82,6 +85,7 @@ export default function User(props) {
       <br></br>
       <br></br>
       <button onClick={save}>Сохранить</button>
+      </div>
     </main>
   );
 
