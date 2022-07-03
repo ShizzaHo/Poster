@@ -1,3 +1,5 @@
+import './user.scss'
+
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from "react-router-dom";
@@ -9,6 +11,8 @@ export default function User(props) {
     const [accountInfo, setAccountInfo] = useState({});
 
     const navigate = useNavigate();
+
+    document.documentElement.style.setProperty("--cover", "url("+accountInfo.cover+")");   
     
     useEffect(() =>{
         const getData = async () => {
@@ -30,7 +34,8 @@ export default function User(props) {
     }, [id]);
 
     return (
-        <main className=''>
+        <main className='user__main'>
+            <img src={accountInfo.avatar} className="user__main__avatar"/>
             <p>Логин: {userData.login}</p>
             <p>Полное имя: {userData.fullname}</p>
             <p>Статус пользователя: {accountInfo.profileStatus}</p>
@@ -38,7 +43,7 @@ export default function User(props) {
             <p>Статус аккаунта: {userData.status}</p>
             <a href='#' onClick={editProfile}>Редактировать данные аккаунта</a><br></br>
             <a href='#' onClick={closeAllSessions}>Завершить все активные сессии</a><br></br>
-            <a href='#'>Удалить аккаунт</a><br></br>
+            <a href='#' onClick={deleteAccount}>Удалить аккаунт</a><br></br>
         </main>
     );
 
@@ -72,6 +77,35 @@ export default function User(props) {
                 navigate('/', [navigate])
             } else {
                 alert("Не удалось удалить все сессии")
+                alert(json.payload.data)
+            }
+        } else {
+            alert("Ошибка HTTP: " + response.status);
+        }
+    }
+
+    async function deleteAccount() {
+        const password = await prompt("Введите ваш пароль");
+
+        let response = await fetch("http://localhost:3001/api/deleteAccount", {
+            method: "post",
+            headers: {
+            Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                login: await userData.login,
+                password: await password,
+            }),
+        });
+
+        if (response.ok) {
+            let json = await response.json();
+            if (json.payload.status === "OK") {
+                localStorage.setItem("SESSION_TOKEN", undefined);
+                navigate('/', [navigate])
+            } else {
+                alert("Не удалось удалить аккаунт")
                 alert(json.payload.data)
             }
         } else {

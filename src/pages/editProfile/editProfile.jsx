@@ -60,6 +60,18 @@ export default function User(props) {
         placeholder="Статус"
       ></input>
       <br></br>
+      <input
+        value={accountInfo.avatar}
+        onChange={avatarEdit}
+        placeholder="Аватар"
+      ></input>
+      <br></br>
+      <input
+        value={accountInfo.cover}
+        onChange={coverEdit}
+        placeholder="Обложка"
+      ></input>
+      <br></br>
       <br></br>
       <input onChange={passwordEdit} placeholder="Пароль"></input>
       <br></br>
@@ -126,6 +138,20 @@ export default function User(props) {
     setAccountInfo({
       ...accountInfo,
       profileStatus: e.target.value,
+    });
+  }
+
+  function avatarEdit(e) {
+    setAccountInfo({
+      ...accountInfo,
+      avatar: e.target.value,
+    });
+  }
+
+  function coverEdit(e) {
+    setAccountInfo({
+      ...accountInfo,
+      cover: e.target.value,
     });
   }
 

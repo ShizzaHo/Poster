@@ -65,6 +65,8 @@ app.post("/api/createUser", jsonParser, async function (request, response) {
           status: "default",
           accountInfo: {
             profileStatus: "",
+            avatar: null,
+            cover: null,
           },
         })
         .then(async (e) => {
@@ -227,7 +229,7 @@ app.post("/api/editUserData", jsonParser, async function (request, response) {
 
   if (findedUser !== null) {
     if (await findedUser.password === request.body.password) {
-      if ((await users.findOne({ login: request.body.global.login })) == null) {
+      if (request.body.userLogin === request.body.global.login || await users.findOne({ login: request.body.global.login }) === null) {
         await users.updateOne(
           { login: request.body.userLogin },
           {
@@ -237,6 +239,8 @@ app.post("/api/editUserData", jsonParser, async function (request, response) {
               email: request.body.global.email,
               accountInfo: {
                 profileStatus: request.body.other.profileStatus,
+                avatar: request.body.other.avatar,
+                cover: request.body.other.cover,
               },
             },
           }
@@ -334,27 +338,41 @@ app.post("/api/editUserPassword", jsonParser, async function (request, response)
   }
 });
 
+/* -------------------------------------------------------------------------- */
+/*                       Завершение всех активных сессий                      */
+/* -------------------------------------------------------------------------- */
+
 app.post("/api/closeAllSessions", jsonParser, async function (request, response) {
   console.info("[POST] Обращение к /api/closeAllSessions");
 
   const findedUser = await users.findOne({ login: request.body.login });
   const findedSessions = await sessions.find({ userID: await findedUser._id });
 
-  if (request.body.password === findedUser.password) {
-    if (findedSessions !== null) {
-      await sessions.deleteMany({ userID: await findedUser._id });
-      response.json({
-        type: "TYPE_CLOSEALLSESSIONS",
-        payload: {
-          status: "OK",
-        },
-      });
+  if (findedUser !== null) {
+    if (request.body.password === findedUser.password) {
+      if (findedSessions !== null) {
+        await sessions.deleteMany({ userID: await findedUser._id });
+        response.json({
+          type: "TYPE_CLOSEALLSESSIONS",
+          payload: {
+            status: "OK",
+          },
+        });
+      } else {
+        response.json({
+          type: "TYPE_CLOSEALLSESSIONS",
+          payload: {
+            status: "ERROR",
+            data: "ERRORTYPE_SESSIONS_NONEXISTENT",
+          },
+        });
+      }
     } else {
       response.json({
         type: "TYPE_CLOSEALLSESSIONS",
         payload: {
           status: "ERROR",
-          data: "ERRORTYPE_SESSIONS_NONEXISTENT",
+          data: "ERRORTYPE_ACCESS_BLOCKED",
         },
       });
     }
@@ -363,7 +381,47 @@ app.post("/api/closeAllSessions", jsonParser, async function (request, response)
       type: "TYPE_CLOSEALLSESSIONS",
       payload: {
         status: "ERROR",
-        data: "ERRORTYPE_ACCESS_BLOCKED",
+        data: "ERRORTYPE_USER_NONEXISTENT",
+      },
+    });
+  }
+
+});
+
+/* -------------------------------------------------------------------------- */
+/*                              Удаление аккаунта                             */
+/* -------------------------------------------------------------------------- */
+
+app.post("/api/deleteAccount", jsonParser, async function (request, response) {
+  console.info("[POST] Обращение к /api/deleteAccount");
+
+  const findedUser = await users.findOne({ login: request.body.login });
+
+  if (findedUser !== null) {
+    if (request.body.password === findedUser.password) {
+      await users.deleteOne({ login: request.body.login });
+      await sessions.deleteMany({ userID: await findedUser._id });
+      response.json({
+        type: "TYPE_DELETEACCOUNT",
+        payload: {
+          status: "OK",
+        },
+      });
+    } else {
+      response.json({
+        type: "TYPE_DELETEACCOUNT",
+        payload: {
+          status: "ERROR",
+          data: "ERRORTYPE_ACCESS_BLOCKED",
+        },
+      });
+    }
+  } else {
+    response.json({
+      type: "TYPE_DELETEACCOUNT",
+      payload: {
+        status: "ERROR",
+        data: "ERRORTYPE_USER_NONEXISTENT",
       },
     });
   }

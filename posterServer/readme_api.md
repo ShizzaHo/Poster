@@ -275,3 +275,35 @@ http://localhost:3001/api/getUserInfo?session=*USER_SESSION*
 }
 	</code></pre>
 </details>
+
+## deleteAccount
+Запрос для обращения: `/api/deleteAccount`
+
+Тип: POST
+
+Наименование в ответе: `TYPE_DELETEACCOUNT`
+
+Описание: Используется для удаления аккаунта
+
+Входные данные: Логин пользователя, пароль пользователя
+
+<details>
+  <summary>Пример запроса</summary>
+  <pre><code>
+{
+    login: *USER_LOGIN*,
+    password: *USER_PASSWORD*,
+}
+  </code></pre>
+</details>
+<details>
+  <summary>Пример ответа</summary>
+  <pre><code>
+{
+    type: "TYPE_DELETEACCOUNT",
+    payload: {
+        status: "OK",
+    },
+}
+	</code></pre>
+</details>

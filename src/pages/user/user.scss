@@ -1,0 +1,13 @@
+:root{
+    --cover: "";
+}
+
+.user__main{
+    min-height: 100vh;
+    background: var(--cover);
+}
+
+.user__main__avatar{
+    width: 100px;
+    height: 100px;
+}
