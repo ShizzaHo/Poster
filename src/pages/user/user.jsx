@@ -41,21 +41,39 @@ export default function User(props) {
             <LoaderBox
                 mode="hide"    
             />
-
             <main className='user__main'>
             <LeftMenu/>
             <div className='user__main__content'>
                 <div className='user__content__account'>
-                    <img src={accountInfo.avatar} className="user__main__avatar"/>
-                    <p>Логин: {userData.login}</p>
-                    <p>Полное имя: {userData.fullname}</p>
-                    <p>Статус пользователя: {accountInfo.profileStatus}</p>
+                    <div className='user__account__fans'>
+                        <p><b>0</b> читателей</p>
+                        <p><b>0</b> лайков</p>
+                    </div>
+                    <div className='user__account__info'>
+                        <img src={accountInfo.avatar} className="user__info__avatar"/>
+                        <p className='user__info__fullname'>{userData.fullname}</p>
+                        <p className='user__info__login'>{userData.login}</p>
+                    </div>
+                    <div className='user__account__stats'>
+                        <p><b>0</b> читает</p>
+                        <p><b>0</b> оценил</p>
+                    </div>
+                    {/* <p>Статус пользователя: {accountInfo.profileStatus}</p>
                     <p>Email: {userData.email}</p>
                     <p>Статус аккаунта: {userData.status}</p>
                     <a href='#' onClick={editProfile}>Редактировать данные аккаунта</a><br></br>
                     <a href='#' onClick={closeAllSessions}>Завершить все активные сессии</a><br></br>
-                    <a href='#' onClick={deleteAccount}>Удалить аккаунт</a><br></br>
+                    <a href='#' onClick={deleteAccount}>Удалить аккаунт</a><br></br> */}
                 </div>
+                <div className='user__content__posts'>
+                    <div className='user__posts__category'>
+                        <ul className="user__category__categories">
+                            <li>Все посты</li>
+                            <li>Все посты 2</li>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
             </main>
         </>
