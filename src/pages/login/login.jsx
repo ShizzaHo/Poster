@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import MaterialIcon from "material-icons-react";
 
 import PosterTitle from "../../components/global/posterTitle/PosterTitle";
+import LoaderBox from "../../components/global/loaderBox/loaderBox";
 
 import { useState } from "react";
 
@@ -15,46 +16,50 @@ export default function Login() {
   });
 
   const [closePanel, setClosePanel] = useState(false);
+  const [loginComplete, setLoginComplete] = useState(false);
 
   return (
-    <div className={closePanel ? "fullscreenBlur_close" : "fullscreenBlur"}>
-      <footer className="login__footer">
-        <div className="login__footer__content">
-          <div className="login__content__icon" onClick={back}>
-            <MaterialIcon icon="arrow_back" color="#FFFFFF" />
+    <>
+      {loginComplete ? <LoaderBox mode="show"/> : <></>}
+      <div className={closePanel ? "fullscreenBlur_close" : "fullscreenBlur"}>
+        <footer className="login__footer">
+          <div className="login__footer__content">
+            <div className="login__content__icon" onClick={back}>
+              <MaterialIcon icon="arrow_back" color="#FFFFFF" />
+            </div>
+            <span className="login__content__text">Войти в POSTER</span>
           </div>
-          <span className="login__content__text">Войти в POSTER</span>
-        </div>
-      </footer>
-      <main className="login__main">
-        <div className="login__main__content">
-          <PosterTitle />
-          <div className="login__content__buttons">
-            <input
-              type="email"
-              pattern=".+@globex\.com"
-              required
-              placeholder="Почта"
-              onChange={changeEmail}
-              value={inputs.email}
-              className="textBox"
-            ></input>
-            <br />
-            <input
-              type="password"
-              placeholder="Пароль"
-              onChange={changePassword}
-              value={inputs.password}
-              className="textBox"
-            ></input>
-            <br />
+        </footer>
+        <main className="login__main">
+          <div className="login__main__content">
+            <PosterTitle />
+            <div className="login__content__buttons">
+              <input
+                type="email"
+                pattern=".+@globex\.com"
+                required
+                placeholder="Почта"
+                onChange={changeEmail}
+                value={inputs.email}
+                className="textBox"
+              ></input>
+              <br />
+              <input
+                type="password"
+                placeholder="Пароль"
+                onChange={changePassword}
+                value={inputs.password}
+                className="textBox"
+              ></input>
+              <br />
+            </div>
+            <button onClick={login} className="button">
+              Войти
+            </button>
           </div>
-          <button onClick={login} className="button">
-            Войти
-          </button>
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+    </>
   );
 
   function back() {
@@ -104,13 +109,20 @@ export default function Login() {
     if (response.ok) {
       let json = await response.json();
       if (json.payload.status === "OK") {
-        window.localStorage.setItem("SESSION_TOKEN", json.payload.data.token);
-        navigate("/", [navigate]);
+        nextPage(json)
       } else {
         alert(json.payload.data);
       }
     } else {
       alert("Ошибка HTTP: " + response.status);
     }
+  }
+
+  function nextPage(json) {
+    setLoginComplete(true);
+    setTimeout(()=>{
+      window.localStorage.setItem("SESSION_TOKEN", json.payload.data.token);
+      navigate("/user/"+json.payload.data.login, [navigate]);
+    }, 800)
   }
 }

@@ -1,0 +1,36 @@
+.laderBox__pageLoader{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 99999;
+}
+
+.laderBox__pageLoader_hide{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 99999;
+
+    animation: fade-out 800ms ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+.laderBox__pageLoader_show{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 99999;
+
+    animation: fade-in 800ms ease-in-out;
+    animation-fill-mode: forwards;
+}

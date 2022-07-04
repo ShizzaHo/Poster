@@ -122,6 +122,7 @@ app.post("/api/loginUser", jsonParser, async function (request, response) {
           status: "OK",
           data: {
             token: await generateSessionToken(findedUser._id),
+            login: await findedUser.login,
           },
         },
       });

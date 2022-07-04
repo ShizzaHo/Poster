@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from "react-router-dom";
 
 import LeftMenu from '../../components/global/leftMenu/leftMenu';
+import LoaderBox from '../../components/global/loaderBox/loaderBox';
 
 export default function User(props) {
     const { id } = useParams();
@@ -36,7 +37,12 @@ export default function User(props) {
     }, [id]);
 
     return (
-        <main className='user__main'>
+        <>
+            <LoaderBox
+                mode="hide"    
+            />
+
+            <main className='user__main'>
             <LeftMenu/>
             <div className='user__main__content'>
                 <div className='user__content__account'>
@@ -51,7 +57,8 @@ export default function User(props) {
                     <a href='#' onClick={deleteAccount}>Удалить аккаунт</a><br></br>
                 </div>
             </div>
-        </main>
+            </main>
+        </>
     );
 
     function errorPage() {

@@ -5,6 +5,7 @@ import MaterialIcon from "material-icons-react";
 import { useNavigate } from "react-router-dom";
 
 import PosterTitle from "../../components/global/posterTitle/PosterTitle";
+import LoaderBox from "../../components/global/loaderBox/loaderBox";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -18,69 +19,76 @@ export default function Register() {
     passwordRepeat: "",
   });
 
+  const [registerComplete, setRegisterComplete] = useState(false);
+
   return (
-    <div className={closePanel ? "fullscreenBlur_close" : "fullscreenBlur"}>
-      <footer className="register__footer">
-        <div className="register__footer__content">
-          <div className="register__content__icon" onClick={back}>
-            <MaterialIcon icon="arrow_back" color="#FFFFFF" />
+    <>
+      {registerComplete ? <LoaderBox mode="show"/> : <></>}
+      <div className={closePanel ? "fullscreenBlur_close" : "fullscreenBlur"}>
+        <footer className="register__footer">
+          <div className="register__footer__content">
+            <div className="register__content__icon" onClick={back}>
+              <MaterialIcon icon="arrow_back" color="#FFFFFF" />
+            </div>
+            <span className="register__content__text">
+              Регистрация в POSTER
+            </span>
           </div>
-          <span className="register__content__text">Регистрация в POSTER</span>
-        </div>
-      </footer>
-      <main>
-        <div className="register__main__content">
-          <PosterTitle />
-          <div className="register__content__buttons">
-            <input
-              type="text"
-              placeholder="Логин"
-              onChange={changeLogin}
-              value={inputs.login}
-              className="textBox"
-            ></input>
-            <br />
-            <input
-              type="email"
-              pattern=".+@globex\.com"
-              required
-              placeholder="Почта"
-              onChange={changeEmail}
-              value={inputs.email}
-              className="textBox"
-            ></input>
-            <br />
-            <input
-              type="text"
-              placeholder="Полное имя (по желанию)"
-              onChange={changeFullname}
-              value={inputs.fullname}
-              className="textBox"
-            ></input>
-            <br />
-            <input
-              type="password"
-              placeholder="Пароль"
-              onChange={changePassword}
-              value={inputs.password}
-              className="textBox"
-            ></input>
-            <br />
-            <input
-              type="password"
-              placeholder="Повторите пароль"
-              onChange={changePasswordRepeat}
-              value={inputs.passwordRepeat}
-              className="textBox"
-            ></input>
-            <br />
+        </footer>
+        <main>
+          <div className="register__main__content">
+            <PosterTitle />
+            <div className="register__content__buttons">
+              <input
+                type="text"
+                placeholder="Логин"
+                onChange={changeLogin}
+                value={inputs.login}
+                className="textBox"
+              ></input>
+              <br />
+              <input
+                type="email"
+                pattern=".+@globex\.com"
+                required
+                placeholder="Почта"
+                onChange={changeEmail}
+                value={inputs.email}
+                className="textBox"
+              ></input>
+              <br />
+              <input
+                type="text"
+                placeholder="Полное имя (по желанию)"
+                onChange={changeFullname}
+                value={inputs.fullname}
+                className="textBox"
+              ></input>
+              <br />
+              <input
+                type="password"
+                placeholder="Пароль"
+                onChange={changePassword}
+                value={inputs.password}
+                className="textBox"
+              ></input>
+              <br />
+              <input
+                type="password"
+                placeholder="Повторите пароль"
+                onChange={changePasswordRepeat}
+                value={inputs.passwordRepeat}
+                className="textBox"
+              ></input>
+              <br />
+            </div>
+            <button onClick={registration} className="button">
+              Зарегестрироваться
+            </button>
           </div>
-          <button onClick={registration} className="button">
-            Зарегестрироваться
-          </button>
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+    </>
   );
 
   function back() {
@@ -161,13 +169,20 @@ export default function Register() {
     if (response.ok) {
       let json = await response.json();
       if (json.payload.status === "OK") {
-        window.localStorage.setItem("SESSION_TOKEN", json.payload.data.token);
-        navigate("/", [navigate]);
+        nextPage(json)
       } else {
         alert(json.payload.data);
       }
     } else {
       alert("Ошибка HTTP: " + response.status);
     }
+  }
+
+  function nextPage(json) {
+    setRegisterComplete(true);
+    setTimeout(()=>{
+      window.localStorage.setItem("SESSION_TOKEN", json.payload.data.token);
+      navigate("/user/"+inputs.login, [navigate]);
+    }, 800)
   }
 }

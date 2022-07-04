@@ -123,7 +123,10 @@ http://localhost:3001/api/test
     type: "TYPE_CREATEUSER", 
     payload: {
 	    status: "OK", 
-	    data: *SESSION_TOKEN*
+	    data: {
+			token: *SESSION_TOKEN*,
+			login: *USER_LOGIN*
+		}
     }
 }
 	</code></pre>

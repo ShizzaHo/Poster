@@ -2,6 +2,10 @@
 /*                          Глобальная преднастройка                          */
 /* -------------------------------------------------------------------------- */
 
+:root{
+  --siteBg: url(../../res/backgrounds/0001.jpg);
+}
+
 * {
   font-family: "Inter", "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -18,7 +22,7 @@ body {
 
   min-height: 100vh;
 
-  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../../res/backgrounds/0001.jpg);
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), var(--siteBg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
