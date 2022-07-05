@@ -1,4 +1,6 @@
+import { webInfo } from '../../info';
 import "./login.scss";
+
 import { useNavigate } from "react-router-dom";
 import MaterialIcon from "material-icons-react";
 
@@ -94,7 +96,7 @@ export default function Login() {
   }
 
   async function loginSend() {
-    let response = await fetch("http://localhost:3001/api/loginUser", {
+    let response = await fetch(webInfo.backendServer+"/api/loginUser", {
       method: "post",
       headers: {
         Accept: "application/json",

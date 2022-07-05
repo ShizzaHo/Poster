@@ -13,6 +13,7 @@ import Register from './pages/register/register';
 import Login from './pages/login/login';
 import UserAgreement from './pages/userAgreement/userAgreement';
 import EditProfile from './pages/editProfile/editProfile';
+import NewPost from './pages/newPost/newPost';
 
 import reportWebVitals from './reportWebVitals';
 
@@ -30,6 +31,7 @@ root.render(
 
         <Route path="/user/:id" element={<User />} /> {/* Профиль пользователя */}
         <Route path="/editProfile" element={<EditProfile />} /> {/* Редактирование профиля */}
+        <Route path="/newPost" element={<NewPost />} /> {/* Создать новый пост */}
 
         <Route path="/login" element={<Login />} /> {/* Страница регистрации */}
         <Route path="/register" element={<Register />} /> {/* Страница входа */}

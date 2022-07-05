@@ -1,3 +1,4 @@
+import { webInfo } from '../../info';
 import './editProfile.scss'
 
 import { useEffect, useState } from "react";
@@ -16,7 +17,7 @@ export default function User(props) {
     const getData = async () => {
       const userSession = localStorage.getItem("SESSION_TOKEN");
       let response = await fetch(
-        "http://localhost:3001/api/getUserInfo?session=" + (await userSession)
+        webInfo.backendServer+"/api/getUserInfo?session=" + (await userSession)
       );
 
       if (response.ok) {
@@ -90,7 +91,7 @@ export default function User(props) {
   );
 
   async function save() {
-    let response = await fetch("http://localhost:3001/api/editUserData", {
+    let response = await fetch(webInfo.backendServer+"/api/editUserData", {
       method: "post",
       headers: {
         Accept: "application/json",
@@ -168,7 +169,7 @@ export default function User(props) {
     const newPassword = await prompt("Введите новый пароль");
     const newPasswordRepeat = await prompt("Повторите новый пароль");
 
-    let response = await fetch("http://localhost:3001/api/editUserPassword", {
+    let response = await fetch(webInfo.backendServer+"/api/editUserPassword", {
       method: "post",
       headers: {
         Accept: "application/json",

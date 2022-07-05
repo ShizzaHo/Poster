@@ -68,6 +68,10 @@ app.post("/api/createUser", jsonParser, async function (request, response) {
             avatar: null,
             cover: null,
           },
+          categories: ["Все посты"],
+          posts: {
+            
+          },
         })
         .then(async (e) => {
           const userInfo = await users.findOne({ email: request.body.email });
@@ -205,6 +209,7 @@ app.get("/api/getUserInfo", jsonParser, async function (request, response) {
           status: await user.status,
           email: await user.email,
           accountInfo: await user.accountInfo,
+          categories: await user.categories,
         },
       },
     });

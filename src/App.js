@@ -1,3 +1,4 @@
+import { webInfo } from './info';
 import "./App.scss";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -7,13 +8,14 @@ import PosterTitle from "./components/global/posterTitle/PosterTitle";
 export default function App() {
   const navigate = useNavigate();
 
+  const [auth,setAuth] = useState(false);
   const [openPanel, setOpenPanel] = useState(false);
 
   useEffect(() => {
     const checkSession = async () => {
       const userSession = localStorage.getItem("SESSION_TOKEN");
       let response = await fetch(
-        "http://localhost:3001/api/getUserInfo?session=" + (await userSession)
+        webInfo.backendServer+"/api/getUserInfo?session=" + (await userSession)
       );
 
       if (response.ok) {
@@ -22,13 +24,14 @@ export default function App() {
           navigate("/user/" + json.payload.data.login, [navigate]);
         } else {
           localStorage.setItem("SESSION_TOKEN", undefined);
+          setAuth(true)
         }
       }
     };
     checkSession();
   }, []);
 
-  return (
+  const pageNotAuth = (
     <main className="app">
       <div className={openPanel ? "app__blurPanel_open" : "app__blurPanel"}>
         <div className="app__blurPanel__content">
@@ -48,6 +51,12 @@ export default function App() {
         </div>
       </div>
     </main>
+  )
+
+  return (
+    <>
+      {auth ? pageNotAuth : <></>}
+    </>
   );
 
   function login() {

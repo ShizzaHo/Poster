@@ -30,9 +30,17 @@ export default function LeftMenu(props) {
             </ul>
 
             <ul className='leftMenu__buttons'>
-                <li><img src={editIcon} alt="Новый пост"/></li>
-                <li><img src={settingsIcon} alt="Настройки"/></li>
+                <li onClick={newPost}><img src={editIcon} alt="Новый пост"/></li>
+                <li onClick={openSettings}><img src={settingsIcon} alt="Настройки"/></li>
             </ul>
         </nav>
     );
+
+    function openSettings() {
+        navigate("/editProfile", [navigate]);
+    }
+
+    function newPost() {
+        navigate("/newPost", [navigate]);
+    }
 }

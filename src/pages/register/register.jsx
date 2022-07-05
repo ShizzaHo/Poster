@@ -1,3 +1,4 @@
+import { webInfo } from '../../info';
 import "./register.scss";
 
 import { useState } from "react";
@@ -151,7 +152,7 @@ export default function Register() {
   }
 
   async function registrationSend() {
-    let response = await fetch("http://localhost:3001/api/createUser", {
+    let response = await fetch(webInfo.backendServer+"/api/createUser", {
       method: "post",
       headers: {
         Accept: "application/json",

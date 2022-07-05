@@ -7,6 +7,7 @@
     background: var(--cover);
     background-repeat: no-repeat;
     background-size: cover;
+    background-attachment: fixed;
 }
 
 .user__main__content{
@@ -101,9 +102,12 @@
 .user__posts__category{
     height: 56px;
     width: 100%;
+    overflow: scroll;
+    overflow-y: hidden;
+    overflow-x: hidden;
 
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 
@@ -115,10 +119,18 @@
 
 .user__category__categories{
     list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     li{
         display: inline;
         margin-left: 10px;
         margin-right: 10px;
+        cursor: pointer;
+
+        &:hover{
+            text-decoration: underline;
+        }
     }
 }

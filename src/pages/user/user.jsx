@@ -1,3 +1,4 @@
+import { webInfo } from '../../info';
 import './user.scss'
 
 import { useEffect, useState } from 'react';
@@ -7,11 +8,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import LeftMenu from '../../components/global/leftMenu/leftMenu';
 import LoaderBox from '../../components/global/loaderBox/loaderBox';
 
+import { useHorizontalScroll } from "../../components/modules/useSideScroll/useSideScroll";
+
 export default function User(props) {
     const { id } = useParams();
 
     const [userData, setUserData] = useState({});
     const [accountInfo, setAccountInfo] = useState({});
+    const [categories, setCategories] = useState([]);
 
     const navigate = useNavigate();
 
@@ -19,13 +23,14 @@ export default function User(props) {
     
     useEffect(() =>{
         const getData = async () => {
-            let response = await fetch("http://localhost:3001/api/getUserInfo?login="+id);
+            let response = await fetch(webInfo.backendServer+"/api/getUserInfo?login="+id);
 
             if (response.ok) {
                 let json = await response.json();
                 if (json.payload.status === "OK") {
                     setUserData(json.payload.data);
                     setAccountInfo(json.payload.data.accountInfo);
+                    setCategories(json.payload.data.categories)
                 } else {
                     errorPage();
                 }
@@ -35,6 +40,8 @@ export default function User(props) {
         }
         getData();
     }, [id]);
+
+    const scrollRef = useHorizontalScroll();
 
     return (
         <>
@@ -66,10 +73,11 @@ export default function User(props) {
                     <a href='#' onClick={deleteAccount}>Удалить аккаунт</a><br></br> */}
                 </div>
                 <div className='user__content__posts'>
-                    <div className='user__posts__category'>
+                    <div ref={scrollRef} className='user__posts__category'>
                         <ul className="user__category__categories">
-                            <li>Все посты</li>
-                            <li>Все посты 2</li>
+                            {categories.map(item => {
+                                return <li key={item}>{item}</li>
+                            })}
                         </ul>
                     </div>
                 </div>
@@ -90,7 +98,7 @@ export default function User(props) {
     async function closeAllSessions() {
         const password = await prompt("Введите ваш пароль");
 
-        let response = await fetch("http://localhost:3001/api/closeAllSessions", {
+        let response = await fetch(webInfo.backendServer+"/api/closeAllSessions", {
             method: "post",
             headers: {
             Accept: "application/json",
@@ -119,7 +127,7 @@ export default function User(props) {
     async function deleteAccount() {
         const password = await prompt("Введите ваш пароль");
 
-        let response = await fetch("http://localhost:3001/api/deleteAccount", {
+        let response = await fetch(webInfo.backendServer+"/api/deleteAccount", {
             method: "post",
             headers: {
             Accept: "application/json",
