@@ -16,6 +16,7 @@ export default function User(props) {
     const [userData, setUserData] = useState({});
     const [accountInfo, setAccountInfo] = useState({});
     const [categories, setCategories] = useState([]);
+    const [posts, setPosts] = useState([]);
 
     const navigate = useNavigate();
 
@@ -30,7 +31,8 @@ export default function User(props) {
                 if (json.payload.status === "OK") {
                     setUserData(json.payload.data);
                     setAccountInfo(json.payload.data.accountInfo);
-                    setCategories(json.payload.data.categories)
+                    setCategories(json.payload.data.categories);
+                    setPosts(json.payload.data.posts);
                 } else {
                     errorPage();
                 }
@@ -80,8 +82,10 @@ export default function User(props) {
                             })}
                         </ul>
                     </div>
+                    {posts.map(item => {
+                        return <p key={item}>{item}</p>
+                    })}
                 </div>
-
             </div>
             </main>
         </>

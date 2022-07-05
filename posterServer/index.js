@@ -69,9 +69,7 @@ app.post("/api/createUser", jsonParser, async function (request, response) {
             cover: null,
           },
           categories: ["Все посты"],
-          posts: {
-            
-          },
+          posts: [],
         })
         .then(async (e) => {
           const userInfo = await users.findOne({ email: request.body.email });
@@ -210,6 +208,8 @@ app.get("/api/getUserInfo", jsonParser, async function (request, response) {
           email: await user.email,
           accountInfo: await user.accountInfo,
           categories: await user.categories,
+
+          posts: await user.posts, // TODO: ПЕРЕПИСАТЬ В ОТДЕЛЬНЫЙ МЕТОД!!!
         },
       },
     });
@@ -425,6 +425,53 @@ app.post("/api/deleteAccount", jsonParser, async function (request, response) {
   } else {
     response.json({
       type: "TYPE_DELETEACCOUNT",
+      payload: {
+        status: "ERROR",
+        data: "ERRORTYPE_USER_NONEXISTENT",
+      },
+    });
+  }
+});
+
+/* -------------------------------------------------------------------------- */
+/*                              Публикация поста                              */
+/* -------------------------------------------------------------------------- */
+
+app.post("/api/publishPost", jsonParser, async function (request, response) {
+  console.info("[POST] Обращение к /api/publishPost");
+
+  // TODO: Временный API метод, нужно переделать
+
+  const findedUser = await users.findOne({ login: request.body.login });
+
+  if (findedUser !== null) {
+    if (request.body.password === findedUser.password) {
+      await users.updateOne(
+        { login: request.body.login },
+        {
+          $push: {
+            posts: [await request.body.message],
+          },
+        }
+      );
+      response.json({
+        type: "TYPE_PUBLISHPOST",
+        payload: {
+          status: "OK",
+        },
+      });
+    } else {
+      response.json({
+        type: "TYPE_PUBLISHPOST",
+        payload: {
+          status: "ERROR",
+          data: "ERRORTYPE_ACCESS_BLOCKED",
+        },
+      });
+    }
+  } else {
+    response.json({
+      type: "TYPE_PUBLISHPOST",
       payload: {
         status: "ERROR",
         data: "ERRORTYPE_USER_NONEXISTENT",
