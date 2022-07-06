@@ -1,0 +1,52 @@
+.post__box{
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+}
+
+.post__box__content{
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.post__box__info{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.post__info__text{
+    padding: 10px;
+}
+
+.post__buttonList__button{
+    height: 100%;
+    padding: 10px;
+    margin-left: 6px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 0;
+    outline: 0;
+    color: white;
+    font-family: "Inter", "Roboto", sans-serif;
+    font-size: 16px;
+
+    cursor: pointer;
+    user-select: none;
+}
+
+.post__buttonList__button:hover{
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.post__buttonList__button:active{
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+.post__iconButton{
+    background-image: url(../../../../res/icons/edit2.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 10px 20px;
+}

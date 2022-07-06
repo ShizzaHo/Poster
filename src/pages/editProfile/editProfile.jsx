@@ -10,7 +10,7 @@ export default function User(props) {
   const [accountInfo, setAccountInfo] = useState({});
 
   const [userEditLogin, setUserEditLogin] = useState(null);
-  const [userPassword, setUserPassword] = useState(null);
+  const [userPassword, setUserPassword] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,6 +26,7 @@ export default function User(props) {
           setUserData(json.payload.data);
           setAccountInfo(json.payload.data.accountInfo);
           setUserEditLogin(json.payload.data.login);
+          setUserPassword(localStorage.getItem("PASSWORD"))
         } else {
           errorPage();
         }
@@ -77,7 +78,7 @@ export default function User(props) {
       ></input>
       <br></br>
       <br></br>
-      <input onChange={passwordEdit} placeholder="Пароль"></input>
+      <input onChange={passwordEdit} placeholder="Пароль" value={userPassword}></input>
       <br></br>
       <br></br>
       <a href="#" onClick={editPassword}>

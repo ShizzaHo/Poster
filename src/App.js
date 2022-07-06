@@ -24,6 +24,7 @@ export default function App() {
           navigate("/user/" + json.payload.data.login, [navigate]);
         } else {
           localStorage.setItem("SESSION_TOKEN", undefined);
+          localStorage.setItem("PASSWORD", undefined);
           setAuth(true)
         }
       }

@@ -209,7 +209,7 @@ app.get("/api/getUserInfo", jsonParser, async function (request, response) {
           accountInfo: await user.accountInfo,
           categories: await user.categories,
 
-          posts: await user.posts, // TODO: ПЕРЕПИСАТЬ В ОТДЕЛЬНЫЙ МЕТОД!!!
+          posts: await user.posts.reverse(), // TODO: ПЕРЕПИСАТЬ В ОТДЕЛЬНЫЙ МЕТОД!!!
         },
       },
     });
@@ -443,6 +443,7 @@ app.post("/api/publishPost", jsonParser, async function (request, response) {
   // TODO: Временный API метод, нужно переделать
 
   const findedUser = await users.findOne({ login: request.body.login });
+  const data = new Date();
 
   if (findedUser !== null) {
     if (request.body.password === findedUser.password) {
@@ -450,7 +451,14 @@ app.post("/api/publishPost", jsonParser, async function (request, response) {
         { login: request.body.login },
         {
           $push: {
-            posts: [await request.body.message],
+            posts: [{
+              data: data.toLocaleDateString("ru-RU"),
+              title: await request.body.title,
+              content: await request.body.message,
+              addedResources: [],
+              likes: 0,
+              readings: 0,
+            }],
           },
         }
       );

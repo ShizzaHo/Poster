@@ -11,6 +11,7 @@ export default function NewPost() {
     const [categories, setCategories] = useState([]);
 
     const [selectedCategory, setSelectedCategory] = useState();
+    const [postTitle, setPostTitle] = useState("");
     const [postMessage, setPostMessage] = useState("");
 
     useEffect(() =>{
@@ -41,6 +42,7 @@ export default function NewPost() {
                     return <option value={item} key={item}>{item}</option>
                 })}
             </select><br></br>
+            <textarea value={postTitle} onChange={(e)=>{setPostTitle(e.target.value)}}></textarea><br></br>
             <textarea value={postMessage} onChange={(e)=>{setPostMessage(e.target.value)}}></textarea><br></br>
             <button onClick={publish}>Опубликовать в категорию: {selectedCategory}</button>
         </main>
@@ -63,7 +65,8 @@ export default function NewPost() {
             },
             body: JSON.stringify({
                 login: await userData.login,
-                password: await "1",
+                password: localStorage.getItem("PASSWORD"),
+                title: postTitle,
                 message: postMessage,
             }),
         });

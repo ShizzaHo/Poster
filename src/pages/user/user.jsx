@@ -7,6 +7,7 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import LeftMenu from '../../components/global/leftMenu/leftMenu';
 import LoaderBox from '../../components/global/loaderBox/loaderBox';
+import Post from './components/post/post';
 
 import { useHorizontalScroll } from "../../components/modules/useSideScroll/useSideScroll";
 
@@ -18,6 +19,8 @@ export default function User(props) {
     const [categories, setCategories] = useState([]);
     const [posts, setPosts] = useState([]);
 
+    const [isMyPage, setIsMyPage] = useState(false);
+
     const navigate = useNavigate();
 
     document.documentElement.style.setProperty("--cover", "url("+accountInfo.cover+")");   
@@ -25,7 +28,7 @@ export default function User(props) {
     useEffect(() =>{
         const getData = async () => {
             let response = await fetch(webInfo.backendServer+"/api/getUserInfo?login="+id);
-
+ 
             if (response.ok) {
                 let json = await response.json();
                 if (json.payload.status === "OK") {
@@ -33,6 +36,7 @@ export default function User(props) {
                     setAccountInfo(json.payload.data.accountInfo);
                     setCategories(json.payload.data.categories);
                     setPosts(json.payload.data.posts);
+                    getMyData(json.payload.data.login);
                 } else {
                     errorPage();
                 }
@@ -40,6 +44,20 @@ export default function User(props) {
                 alert("Ошибка HTTP: " + response.status);
             }
         }
+
+        const getMyData = async (login) => {
+            let response = await fetch(webInfo.backendServer+"/api/getUserInfo?session="+localStorage.getItem("SESSION_TOKEN"));
+ 
+            if (response.ok) {
+                let json = await response.json();
+                if (json.payload.status === "OK") {
+                    if (json.payload.data.login === login) {
+                        setIsMyPage(true);
+                    }
+                }
+            }
+        }
+
         getData();
     }, [id]);
 
@@ -48,7 +66,7 @@ export default function User(props) {
     return (
         <>
             <LoaderBox
-                mode="hide"    
+                mode="hide"   
             />
             <main className='user__main'>
             <LeftMenu/>
@@ -82,9 +100,11 @@ export default function User(props) {
                             })}
                         </ul>
                     </div>
-                    {posts.map(item => {
-                        return <p key={item}>{item}</p>
-                    })}
+                    <div className='user__category__postsList'>
+                        {posts.map(item => {
+                            return <Post data={item} editButton={isMyPage}></Post>
+                        })}
+                    </div>
                 </div>
             </div>
             </main>
@@ -147,6 +167,7 @@ export default function User(props) {
             let json = await response.json();
             if (json.payload.status === "OK") {
                 localStorage.setItem("SESSION_TOKEN", undefined);
+                localStorage.setItem("PASSWORD", undefined);
                 navigate('/', [navigate])
             } else {
                 alert("Не удалось удалить аккаунт")

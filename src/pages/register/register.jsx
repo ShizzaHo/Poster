@@ -183,6 +183,7 @@ export default function Register() {
     setRegisterComplete(true);
     setTimeout(()=>{
       window.localStorage.setItem("SESSION_TOKEN", json.payload.data.token);
+      window.localStorage.setItem("PASSWORD", inputs.password);
       navigate("/user/"+inputs.login, [navigate]);
     }, 800)
   }
