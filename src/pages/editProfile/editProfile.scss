@@ -1,6 +1,53 @@
 .editProfile__main{
     min-height: 100vh;
     background: var(--cover);
+    background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+.editProfile__main__content{
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    min-height: 100vh;
+}
+
+.editProfile__pageBasic{
+    right: 0;
+    margin-left: 52px;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.editProfile__content__menu{
+    right: 0;
+    margin-left: 52px;
+    box-sizing: border-box;
+    padding: 10px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.editProfile__menu__items{
+    list-style: none;
+
+    li{
+        display: inline;
+        margin: 0px 10px;
+        cursor: pointer;
+
+        &:hover{
+            color: rgb(223, 223, 223);
+        }
+
+        &:active{
+            color: rgb(196, 196, 196);
+        }
+    }
+}
+

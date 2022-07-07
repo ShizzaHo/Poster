@@ -4,6 +4,9 @@ import {useNavigate} from 'react-router-dom';
 
 import { useState, useEffect } from 'react';
 
+import LoaderBox from '../../components/global/loaderBox/loaderBox';
+import LeftMenu from '../../components/global/leftMenu/leftMenu';
+
 export default function NewPost() {
     const navigate = useNavigate();
 
@@ -35,17 +38,27 @@ export default function NewPost() {
     }, []);
 
     return (
-        <main>
-            <select name="" id="" onChange={selectItem}>
-                <option disabled>Выберите категорию</option>
-                {categories.map(item => {
-                    return <option value={item} key={item}>{item}</option>
-                })}
-            </select><br></br>
-            <textarea value={postTitle} onChange={(e)=>{setPostTitle(e.target.value)}}></textarea><br></br>
-            <textarea value={postMessage} onChange={(e)=>{setPostMessage(e.target.value)}}></textarea><br></br>
-            <button onClick={publish}>Опубликовать в категорию: {selectedCategory}</button>
-        </main>
+        <>
+            <LoaderBox
+                mode="hide"   
+            />
+            <main className='newPost__main'>
+                <LeftMenu/>
+                <div className='newPost__main__content'>
+                    <div className='newPost__content__post'>
+                    <select name="" id="" onChange={selectItem}>
+                        <option disabled>Выберите категорию</option>
+                        {categories.map(item => {
+                            return <option value={item} key={item}>{item}</option>
+                        })}
+                    </select><br></br>
+                    <input value={postTitle} onChange={(e)=>{setPostTitle(e.target.value)}} placeholder="Заголовок"></input><br></br>
+                    <textarea value={postMessage} onChange={(e)=>{setPostMessage(e.target.value)}} placeholder="Текст"></textarea><br></br>
+                    <button onClick={publish}>Опубликовать в категорию: {selectedCategory}</button>
+                    </div>
+                </div>
+            </main>
+        </>
     );
 
     function errorPage() {

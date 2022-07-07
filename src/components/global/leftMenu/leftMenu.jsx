@@ -21,8 +21,8 @@ export default function LeftMenu(props) {
     return (
         <nav className='leftMenu__nav'>
             <ul className='leftMenu__buttons'>
-                <li className='leftMenu__buttons__poster'>P</li>
-                <li><img src={userIcon} alt="Личная страница"/></li>
+                <li onClick={home} className='leftMenu__buttons__poster'>P</li>
+                <li ><img src={userIcon} alt="Личная страница"/></li>
                 <li><img src={dashboardIcon} alt="Лента постов"/></li>
                 <li><img src={notificationIcon} alt="Уведомления"/></li>
                 <li><img src={friendsIcon} alt="Друзья"/></li>
@@ -42,5 +42,9 @@ export default function LeftMenu(props) {
 
     function newPost() {
         navigate("/newPost", [navigate]);
+    }
+
+    function home() {
+        navigate("/", [navigate]);
     }
 }

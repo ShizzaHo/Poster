@@ -1,9 +1,12 @@
-import { webInfo } from '../../info';
-import './editProfile.scss'
+import { webInfo } from "../../info";
+import "./editProfile.scss";
 
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+
+import LoaderBox from "../../components/global/loaderBox/loaderBox";
+import LeftMenu from "../../components/global/leftMenu/leftMenu";
 
 export default function User(props) {
   const [userData, setUserData] = useState({});
@@ -11,13 +14,18 @@ export default function User(props) {
 
   const [userEditLogin, setUserEditLogin] = useState(null);
   const [userPassword, setUserPassword] = useState();
+
+  const [menuSelected, setMenuSelected] = useState("BASIC");
+
   const navigate = useNavigate();
 
   useEffect(() => {
     const getData = async () => {
       const userSession = localStorage.getItem("SESSION_TOKEN");
       let response = await fetch(
-        webInfo.backendServer+"/api/getUserInfo?session=" + (await userSession)
+        webInfo.backendServer +
+          "/api/getUserInfo?session=" +
+          (await userSession)
       );
 
       if (response.ok) {
@@ -26,7 +34,7 @@ export default function User(props) {
           setUserData(json.payload.data);
           setAccountInfo(json.payload.data.accountInfo);
           setUserEditLogin(json.payload.data.login);
-          setUserPassword(localStorage.getItem("PASSWORD"))
+          setUserPassword(localStorage.getItem("PASSWORD"));
         } else {
           errorPage();
         }
@@ -37,62 +45,122 @@ export default function User(props) {
     getData();
   }, []);
 
+  let opennedPage = <></>;
+
+  switch (menuSelected) {
+    case "BASIC":
+      opennedPage = (
+        <div className="editProfile__pageBasic">
+          <input
+            value={userData.login}
+            onChange={loginEdit}
+            placeholder="Логин"
+          ></input>
+          <br></br>
+          <input
+            value={userData.fullname}
+            onChange={fullnameEdit}
+            placeholder="Полное имя"
+          ></input>
+          <br></br>
+          <input
+            value={userData.email}
+            onChange={emailEdit}
+            placeholder="Электронная почта"
+          ></input>
+          <br></br>
+          <br></br>
+          <input
+            value={accountInfo.profileStatus}
+            onChange={profileStatsEdit}
+            placeholder="Статус"
+          ></input>
+          <br></br>
+          <input
+            value={accountInfo.avatar}
+            onChange={avatarEdit}
+            placeholder="Аватар"
+          ></input>
+          <br></br>
+          <br></br>
+          <button onClick={save}>Сохранить</button>
+        </div>
+      );
+      break;
+    case "STYLE":
+      opennedPage = (
+        <div className="editProfile__pageBasic">
+          <input
+            value={accountInfo.cover}
+            onChange={coverEdit}
+            placeholder="Обложка"
+          ></input>
+          <br></br>
+          <br></br>
+          <button onClick={save}>Сохранить</button>
+        </div>
+      );
+      break;
+    case "SECURITY":
+      opennedPage = (
+        <div className="editProfile__pageBasic">
+          <a href="#" onClick={editPassword}>
+            Изменить пароль аккаунта
+          </a>
+          <br></br>
+          <br></br>
+          <button onClick={save}>Сохранить</button>
+        </div>
+      );
+      break;
+    default:
+      opennedPage = (
+        <div className="editProfile__pageBasic">
+          Выберите страницу настроек, для продолжения работы
+        </div>
+      );
+      break;
+  }
+
   return (
-    <main className="editProfile__main">
-      <div className='user__main__content'>
-      <input
-        value={userData.login}
-        onChange={loginEdit}
-        placeholder="Логин"
-      ></input>
-      <br></br>
-      <input
-        value={userData.fullname}
-        onChange={fullnameEdit}
-        placeholder="Полное имя"
-      ></input>
-      <br></br>
-      <input
-        value={userData.email}
-        onChange={emailEdit}
-        placeholder="Электронная почта"
-      ></input>
-      <br></br>
-      <br></br>
-      <input
-        value={accountInfo.profileStatus}
-        onChange={profileStatsEdit}
-        placeholder="Статус"
-      ></input>
-      <br></br>
-      <input
-        value={accountInfo.avatar}
-        onChange={avatarEdit}
-        placeholder="Аватар"
-      ></input>
-      <br></br>
-      <input
-        value={accountInfo.cover}
-        onChange={coverEdit}
-        placeholder="Обложка"
-      ></input>
-      <br></br>
-      <br></br>
-      <input onChange={passwordEdit} placeholder="Пароль" value={userPassword}></input>
-      <br></br>
-      <br></br>
-      <a href="#" onClick={editPassword}>
-        Изменить пароль аккаунта
-      </a>
-      <br></br>
-      <br></br>
-      <button onClick={save}>Сохранить</button>
-      </div>
-    </main>
+    <>
+      <LoaderBox mode="hide" />
+      <LeftMenu />
+      <main className="editProfile__main">
+        <div className="editProfile__main__content">
+          <div className="editProfile__content__menu">
+            <ul className="editProfile__menu__items">
+              <li
+                onClick={() => {
+                  setMenuSelected("BASIC");
+                }}
+              >
+                Основные настройки
+              </li>
+              <li
+                onClick={() => {
+                  setMenuSelected("STYLE");
+                }}
+              >
+                Внешний вид страницы
+              </li>
+              <li
+                onClick={() => {
+                  setMenuSelected("SECURITY");
+                }}
+              >
+                Безопасность
+              </li>
+            </ul>
+          </div>
+          {opennedPage}
+        </div>
+      </main>
+    </>
   );
 
   async function save() {
-    let response = await fetch(webInfo.backendServer+"/api/editUserData", {
+    let response = await fetch(webInfo.backendServer + "/api/editUserData", {
       method: "post",
       headers: {
         Accept: "application/json",
@@ -170,19 +238,22 @@ export default function User(props) {
     const newPassword = await prompt("Введите новый пароль");
     const newPasswordRepeat = await prompt("Повторите новый пароль");
 
-    let response = await fetch(webInfo.backendServer+"/api/editUserPassword", {
-      method: "post",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        login: await userEditLogin,
-        oldPassword: await oldPassword,
-        newPassword: await newPassword,
-        newPasswordRepeat: await newPasswordRepeat,
-      }),
-    });
+    let response = await fetch(
+      webInfo.backendServer + "/api/editUserPassword",
+      {
+        method: "post",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          login: await userEditLogin,
+          oldPassword: await oldPassword,
+          newPassword: await newPassword,
+          newPasswordRepeat: await newPasswordRepeat,
+        }),
+      }
+    );
 
     if (response.ok) {
       let json = await response.json();

@@ -80,6 +80,7 @@ export default function User(props) {
                         <img src={accountInfo.avatar} className="user__info__avatar"/>
                         <p className='user__info__fullname'>{userData.fullname}</p>
                         <p className='user__info__login'>{userData.login}</p>
+                        <p className='user__info__status'>{accountInfo.profileStatus}</p>
                     </div>
                     <div className='user__account__stats'>
                         <p><b>0</b> читает</p>

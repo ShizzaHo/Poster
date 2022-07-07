@@ -1,0 +1,23 @@
+.newPost__main{
+    background: var(--cover);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.newPost__main__content{
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    min-height: 100vh;
+}
+
+.newPost__content__post{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    right: 0;
+    margin-left: 52px;
+    box-sizing: border-box;
+    padding: 20px;
+}

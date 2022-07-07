@@ -37,6 +37,13 @@
     opacity: 0.5;
 }
 
+.user__info__status{
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: 300;
+    opacity: 0.7;
+}
+
 .user__content__account{
     position: relative;
     display: flex;
@@ -48,6 +55,8 @@
     padding: 20px;
 
     background: rgba(255, 255, 255, 0.1);
+    transition: all 400ms ease-in-out;
+
 }
 
 .user__account__info{
