@@ -19,23 +19,26 @@ Poster является моим личным экспериментом по с
 
 ## Технологии, используемые в проекте
 
+<p>
 <img alt="JavaScript" src="https://img.shields.io/badge/-JavaScript-f9e64a?style=flat-square&logo=javascript&logoColor=black" />
 <img alt="React" src="https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white" />
 <img alt="Redux" src="https://img.shields.io/badge/-Redux-764abc?style=flat-square&logo=redux&logoColor=white" />
 <img alt="MongoDB" src="https://img.shields.io/badge/-MongoDB-4fa94b?style=flat-square&logo=MongoDB&logoColor=white" />
 <img alt="SASS" src="https://img.shields.io/badge/-Sass-c5568c?style=flat-square&logo=SASS&logoColor=white" />
 <img alt="Express" src="https://img.shields.io/badge/-Express-f9f9f9?style=flat-square&logo=Express&logoColor=black" />
+</p>
 
 ## Другая информация
 
+<p>
 <img alt="Статус проекта" src="https://img.shields.io/static/v1?label=Статус проекта&message=Активен&style=flat-square&color=00AA0D" />
 <img alt="Стадия проекта" src="https://img.shields.io/static/v1?label=Стадия проекта&message=ALPHA&style=flat-square&color=8B8B8B" />
 <br>
 <img alt="Размер проекта" src="https://img.shields.io/github/repo-size/ShizzaHo/Poster?style=flat-square" />
 <img alt="Самый популярный язык в проекте" src="https://img.shields.io/github/languages/top/ShizzaHo/Poster" />
 <img alt="Лицензия" src="https://img.shields.io/github/license/ShizzaHo/Poster?style=flat-square" />
+</p>
 
-<hr>
 <br>
 
 # Инструкция по запуску Poster 
