@@ -208,8 +208,7 @@ app.get("/api/getUserInfo", jsonParser, async function (request, response) {
           email: await user.email,
           accountInfo: await user.accountInfo,
           categories: await user.categories,
-
-          posts: await user.posts.reverse(), // TODO: ПЕРЕПИСАТЬ В ОТДЕЛЬНЫЙ МЕТОД!!!
+          posts: await user.posts.reverse(),
         },
       },
     });
@@ -440,7 +439,7 @@ app.post("/api/deleteAccount", jsonParser, async function (request, response) {
 app.post("/api/publishPost", jsonParser, async function (request, response) {
   console.info("[POST] Обращение к /api/publishPost");
 
-  // TODO: Временный API метод, нужно переделать
+  // ! Экспериментальный метод, который еще точно будет меняться!
 
   const findedUser = await users.findOne({ login: request.body.login });
   const data = new Date();

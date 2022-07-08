@@ -167,6 +167,7 @@ http://localhost:3001/api/getUserInfo?session=*USER_SESSION*
 			accountInfo: {
 				*OTHER_USER_INFO*
 			},
+			posts: [*USER_POSTS*]
 		}
 	}
 }
@@ -307,6 +308,43 @@ http://localhost:3001/api/getUserInfo?session=*USER_SESSION*
     type: "TYPE_DELETEACCOUNT",
     payload: {
         status: "OK",
+    },
+}
+	</code></pre>
+</details>
+
+## publishPost
+Запрос для обращения: `/api/publishPost`
+
+Тип: POST
+
+Наименование в ответе: `TYPE_PUBLISHPOST`
+
+Описание: Используется для публикации поста
+
+Входные данные: Логин пользователя, пароль пользователя, Заголовок поста, Содержимое поста, Прикрепленный массив ресурсов ( ! На данный момент не реализовано ! )
+
+Важно: Этот метод API экспериментальный, потому еще может, и скорее всего будет активно меняться!
+
+<details>
+  <summary>Пример запроса</summary>
+  <pre><code>
+{
+    login: *USER_LOGIN*,
+    password: *USER_PASSWORD*,
+    title: *POST_TITLE*,
+    message: *POST_MESSAGE*,
+	addedResources: [*RESOURCE*]
+}
+  </code></pre>
+</details>
+<details>
+  <summary>Пример ответа</summary>
+  <pre><code>
+{
+    type: "TYPE_PUBLISHPOST",
+    payload: {
+    	status: "OK",
     },
 }
 	</code></pre>
