@@ -1,14 +1,18 @@
 # Poster 
 
-## Предисловие
+## Описание проекта
 
-## Предисловие
+Poster это современная социальная сеть с широким функционалом, в которой вы сможете общаться, публиковать интересные посты и картинки, и следить за другими пользователями
+
+Также Poster позволяет пользователю всячески украшать свой профиль, что делает ваш профиль уникальным!
+
+## Ну и так-же...
 
 Poster является моим личным экспериментом по созданию социальной сети, и не планирует становиться большим и крупным проектом для большой массы людей, да и бюджета у меня на такое нет
 
 <img src="https://i.ibb.co/4f0stv2/1629263052384.png" width="140" height="100" alt="Пфф..."/>
 
-К тому-же, проект не стесняется и не будет стесняться использовать малоподдерживаемые свойства CSS, проект был и будет красивый и приятный глазу! 
+К тому-же, проект не стесняется и не будет стесняться использовать мало поддерживаемые свойства CSS, проект был и будет красивый, и приятный глазу! 
 
 <img src="https://s8.gifyu.com/images/animDemo1.gif" alt="Приветственная страница" />
 <img src="https://s8.gifyu.com/images/animDemo2.gif" alt="Вход в профиль" />
@@ -24,9 +28,12 @@ Poster является моим личным экспериментом по с
 
 ## Другая информация
 
-<img alt="Express" src="https://img.shields.io/github/repo-size/ShizzaHo/Poster?style=flat-square" />
-<img alt="Express" src="https://img.shields.io/github/languages/top/ShizzaHo/Poster" />
-
+<img alt="Статус проекта" src="https://img.shields.io/static/v1?label=Статус проекта&message=Активен&style=flat-square&color=00AA0D" />
+<img alt="Стадия проекта" src="https://img.shields.io/static/v1?label=Стадия проекта&message=ALPHA&style=flat-square&color=8B8B8B" />
+<br>
+<img alt="Размер проекта" src="https://img.shields.io/github/repo-size/ShizzaHo/Poster?style=flat-square" />
+<img alt="Самый популярный язык в проекте" src="https://img.shields.io/github/languages/top/ShizzaHo/Poster" />
+<img alt="Лицензия" src="https://img.shields.io/github/license/ShizzaHo/Poster?style=flat-square" />
 
 <hr>
 <br>
