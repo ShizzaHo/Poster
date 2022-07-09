@@ -46,15 +46,15 @@ export default function NewPost() {
                 <LeftMenu/>
                 <div className='newPost__main__content'>
                     <div className='newPost__content__post'>
-                    <select onChange={selectItem}>
+                    <select onChange={selectItem} className='button'>
                         <option disabled>Выберите категорию</option>
                         {categories.map(item => {
                             return <option value={item} key={item}>{item}</option>
                         })}
                     </select><br></br>
-                    <input value={postTitle} onChange={(e)=>{setPostTitle(e.target.value)}} placeholder="Заголовок"></input><br></br>
-                    <textarea value={postMessage} onChange={(e)=>{setPostMessage(e.target.value)}} placeholder="Текст"></textarea><br></br>
-                    <button onClick={publish}>Опубликовать в категорию: {selectedCategory}</button>
+                    <input value={postTitle} onChange={(e)=>{setPostTitle(e.target.value)}} placeholder="Заголовок" className='textBox'></input><br></br>
+                    <textarea value={postMessage} onChange={(e)=>{setPostMessage(e.target.value)}} placeholder="Текст" className='textBox'></textarea><br></br>
+                    <button onClick={publish} className='button'>Опубликовать в категорию: {selectedCategory}</button>
                     </div>
                 </div>
             </main>
