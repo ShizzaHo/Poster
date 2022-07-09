@@ -73,7 +73,6 @@ app.post("/api/createUser", jsonParser, async function (request, response) {
         })
         .then(async (e) => {
           const userInfo = await users.findOne({ email: request.body.email });
-          const id = { userId: await userInfo._id };
           resolve({
             status: "OK",
             data: {

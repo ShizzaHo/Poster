@@ -34,8 +34,11 @@ Poster является моим личным экспериментом по с
 <img alt="Статус проекта" src="https://img.shields.io/static/v1?label=Статус проекта&message=Активен&style=flat-square&color=00AA0D" />
 <img alt="Стадия проекта" src="https://img.shields.io/static/v1?label=Стадия проекта&message=ALPHA&style=flat-square&color=8B8B8B" />
 <br>
+<a href="https://lgtm.com/projects/g/ShizzaHo/Poster/alerts/"><img alt="Total alerts" src="https://img.shields.io/lgtm/alerts/g/ShizzaHo/Poster.svg?logo=lgtm&logoWidth=18&style=flat-square"/></a>
+<a href="https://lgtm.com/projects/g/ShizzaHo/Poster/context:javascript"><img alt="Language grade: JavaScript" src="https://img.shields.io/lgtm/grade/javascript/g/ShizzaHo/Poster.svg?logo=lgtm&logoWidth=18&style=flat-square"/></a>
+<br>
 <img alt="Размер проекта" src="https://img.shields.io/github/repo-size/ShizzaHo/Poster?style=flat-square" />
-<img alt="Самый популярный язык в проекте" src="https://img.shields.io/github/languages/top/ShizzaHo/Poster" />
+<img alt="Самый популярный язык в проекте" src="https://img.shields.io/github/languages/top/ShizzaHo/Poster?style=flat-square" />
 <img alt="Лицензия" src="https://img.shields.io/github/license/ShizzaHo/Poster?style=flat-square" />
 </p>
 

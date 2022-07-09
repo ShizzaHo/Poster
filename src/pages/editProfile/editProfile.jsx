@@ -2,7 +2,6 @@ import { webInfo } from "../../info";
 import "./editProfile.scss";
 
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import LoaderBox from "../../components/global/loaderBox/loaderBox";
@@ -227,10 +226,6 @@ export default function User(props) {
       ...accountInfo,
       cover: e.target.value,
     });
-  }
-
-  function passwordEdit(e) {
-    setUserPassword(e.target.value);
   }
 
   async function editPassword() {

@@ -2,7 +2,6 @@ import { webInfo } from '../../info';
 import './user.scss'
 
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from "react-router-dom";
 
 import LeftMenu from '../../components/global/leftMenu/leftMenu';
@@ -116,66 +115,66 @@ export default function User(props) {
         window.location.href = "/";
     }
 
-    function editProfile() {
-        navigate('/editProfile', [navigate])
-    }
+    // function editProfile() {
+    //     navigate('/editProfile', [navigate])
+    // }
 
-    async function closeAllSessions() {
-        const password = await prompt("Введите ваш пароль");
+    // async function closeAllSessions() {
+    //     const password = await prompt("Введите ваш пароль");
 
-        let response = await fetch(webInfo.backendServer+"/api/closeAllSessions", {
-            method: "post",
-            headers: {
-            Accept: "application/json",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                login: await userData.login,
-                password: await password,
-            }),
-        });
+    //     let response = await fetch(webInfo.backendServer+"/api/closeAllSessions", {
+    //         method: "post",
+    //         headers: {
+    //         Accept: "application/json",
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify({
+    //             login: await userData.login,
+    //             password: await password,
+    //         }),
+    //     });
 
-        if (response.ok) {
-            let json = await response.json();
-            if (json.payload.status === "OK") {
-                localStorage.setItem("SESSION_TOKEN", undefined);
-                navigate('/', [navigate])
-            } else {
-                alert("Не удалось удалить все сессии")
-                alert(json.payload.data)
-            }
-        } else {
-            alert("Ошибка HTTP: " + response.status);
-        }
-    }
+    //     if (response.ok) {
+    //         let json = await response.json();
+    //         if (json.payload.status === "OK") {
+    //             localStorage.setItem("SESSION_TOKEN", undefined);
+    //             navigate('/', [navigate])
+    //         } else {
+    //             alert("Не удалось удалить все сессии")
+    //             alert(json.payload.data)
+    //         }
+    //     } else {
+    //         alert("Ошибка HTTP: " + response.status);
+    //     }
+    // }
 
-    async function deleteAccount() {
-        const password = await prompt("Введите ваш пароль");
+    // async function deleteAccount() {
+    //     const password = await prompt("Введите ваш пароль");
 
-        let response = await fetch(webInfo.backendServer+"/api/deleteAccount", {
-            method: "post",
-            headers: {
-            Accept: "application/json",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                login: await userData.login,
-                password: await password,
-            }),
-        });
+    //     let response = await fetch(webInfo.backendServer+"/api/deleteAccount", {
+    //         method: "post",
+    //         headers: {
+    //         Accept: "application/json",
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify({
+    //             login: await userData.login,
+    //             password: await password,
+    //         }),
+    //     });
 
-        if (response.ok) {
-            let json = await response.json();
-            if (json.payload.status === "OK") {
-                localStorage.setItem("SESSION_TOKEN", undefined);
-                localStorage.setItem("PASSWORD", undefined);
-                navigate('/', [navigate])
-            } else {
-                alert("Не удалось удалить аккаунт")
-                alert(json.payload.data)
-            }
-        } else {
-            alert("Ошибка HTTP: " + response.status);
-        }
-    }
+    //     if (response.ok) {
+    //         let json = await response.json();
+    //         if (json.payload.status === "OK") {
+    //             localStorage.setItem("SESSION_TOKEN", undefined);
+    //             localStorage.setItem("PASSWORD", undefined);
+    //             navigate('/', [navigate])
+    //         } else {
+    //             alert("Не удалось удалить аккаунт")
+    //             alert(json.payload.data)
+    //         }
+    //     } else {
+    //         alert("Ошибка HTTP: " + response.status);
+    //     }
+    // }
 }

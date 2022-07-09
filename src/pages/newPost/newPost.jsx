@@ -46,7 +46,7 @@ export default function NewPost() {
                 <LeftMenu/>
                 <div className='newPost__main__content'>
                     <div className='newPost__content__post'>
-                    <select name="" id="" onChange={selectItem}>
+                    <select onChange={selectItem}>
                         <option disabled>Выберите категорию</option>
                         {categories.map(item => {
                             return <option value={item} key={item}>{item}</option>

@@ -1,13 +1,11 @@
 import './post.scss';
 
 import React from 'react'
-import { useEffect, useState } from 'react';
-
-import EditPost from "../../../../res/icons/edit2.svg";
+import { useState } from 'react';
 
 export default function Post(props) {
 
-    const [postData, setPostData] = useState(props.data[0]);
+    const [postData] = useState(props.data[0]);
 
     return (
         <div className='post__box'>
