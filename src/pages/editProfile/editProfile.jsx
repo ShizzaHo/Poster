@@ -112,6 +112,14 @@ export default function User(props) {
         </div>
       );
       break;
+    case "CONTROL":
+      opennedPage = (
+        <div className="editProfile__pageBasic">
+          <a href='#' onClick={closeAllSessions}>Завершить все активные сессии</a><br></br>
+          <a href='#' onClick={deleteAccount}>Удалить аккаунт</a><br></br>
+        </div>
+      );
+      break;
     default:
       opennedPage = (
         <div className="editProfile__pageBasic">
@@ -149,6 +157,13 @@ export default function User(props) {
                 }}
               >
                 Безопасность
+              </li>
+              <li
+                onClick={() => {
+                  setMenuSelected("CONTROL");
+                }}
+              >
+                Управление страницей
               </li>
             </ul>
           </div>
@@ -262,6 +277,65 @@ export default function User(props) {
       alert("Ошибка HTTP: " + response.status);
     }
   }
+
+  async function closeAllSessions() {
+        const password = await prompt("Введите ваш пароль");
+
+        let response = await fetch(webInfo.backendServer+"/api/closeAllSessions", {
+            method: "post",
+            headers: {
+            Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                login: await userData.login,
+                password: await password,
+            }),
+        });
+
+        if (response.ok) {
+            let json = await response.json();
+            if (json.payload.status === "OK") {
+                localStorage.setItem("SESSION_TOKEN", undefined);
+                navigate('/', [navigate])
+            } else {
+                alert("Не удалось удалить все сессии")
+                alert(json.payload.data)
+            }
+        } else {
+            alert("Ошибка HTTP: " + response.status);
+        }
+    }
+
+    async function deleteAccount() {
+        const password = await prompt("Введите ваш пароль");
+
+        let response = await fetch(webInfo.backendServer+"/api/deleteAccount", {
+            method: "post",
+            headers: {
+            Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                login: await userData.login,
+                password: await password,
+            }),
+        });
+
+        if (response.ok) {
+            let json = await response.json();
+            if (json.payload.status === "OK") {
+                localStorage.setItem("SESSION_TOKEN", undefined);
+                localStorage.setItem("PASSWORD", undefined);
+                navigate('/', [navigate])
+            } else {
+                alert("Не удалось удалить аккаунт")
+                alert(json.payload.data)
+            }
+        } else {
+            alert("Ошибка HTTP: " + response.status);
+        }
+    }
 
   function errorPage() {
     window.location.href = "/";
