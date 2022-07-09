@@ -12,7 +12,7 @@
     min-height: 100vh;
 }
 
-.editProfile__pageBasic{
+.editProfile__page{
     right: 0;
     margin-left: 52px;
     box-sizing: border-box;
@@ -51,3 +51,8 @@
     }
 }
 
+.editProfile__pageBasic{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
