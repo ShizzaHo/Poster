@@ -31,7 +31,7 @@ Poster является моим личным экспериментом по с
 ## Другая информация
 
 <p>
-<img alt="Статус проекта" src="https://img.shields.io/static/v1?label=Статус проекта&message=Активен&style=flat-square&color=00AA0D" />
+<img alt="Статус проекта" src="https://img.shields.io/static/v1?label=Статус проекта&message=Разработчик отдыхает&style=flat-square&color=9fc5e8" />
 <img alt="Стадия проекта" src="https://img.shields.io/static/v1?label=Стадия проекта&message=ALPHA&style=flat-square&color=8B8B8B" />
 <br>
 <a href="https://lgtm.com/projects/g/ShizzaHo/Poster/alerts/"><img alt="Total alerts" src="https://img.shields.io/lgtm/alerts/g/ShizzaHo/Poster.svg?logo=lgtm&logoWidth=18&style=flat-square"/></a>
